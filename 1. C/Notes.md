@@ -109,27 +109,6 @@ Além de seu escopo e de seu indentificador, uma variável também é classifica
 - relacional-logico: !(negação), >, <, >=, <=, ==(igual lógico), !=(diferente logico) &&, ||;
 - Manipulação de pointers: & e \*.
 
-## Pointers
-
-Pointers são o endereço na memória de uma variável. Uma variável de ponteiro é uma variável especificamente declarada para guardar um ponteiro para seu tipo especificado. Pointers são úteis porque com eles você pode se referenciar a um elemento de uma matriz, permite que funções alterem/modifiquem os parâmetros passados na chamada e ajudam na manipulação de linked lists e outros data types complexos, além de outras coisas.
-
-"&" é usado para se referir ao ENDEREÇO de uma variável na memória. Por exmplo "m = &count;" pode ser lido como "m recebe o Endereço de memória da variável count". O endereço de count é completamente diferente do Valor de count.
-
-"*" é usado para se referir ao VALOR de uma variável, dado o seu endereço. Por exemplo "q= *m;" pode ser lido com "q recebe o Valor que está no endereço de m". Mas como sabemos que "m" tem como valor o endereço de memória de "count", então "q" vai receber o valor de "count".
-
-```c
-#include<stdio.h>
-void main(void){
-    int target, source;
-    int* m;
-    source = 10;
-    m = &source;
-    target = *m;
-    printf("O target é: %d\n", target);
-    printf("O endereço é %d\n", m);
-}
-```
-
 ## Estruturas de controle de fluxo
 
 Existem 3: comandos de seleção, de repetição e de desvio. São usadas para controlar o fluxo de processamento do programa, tipo: "Se o pedido de soverte tem cobertura, adicione cobertura, senão passe para a proxima pergunta sem adicionar cobertura".
@@ -463,311 +442,79 @@ Exemplo de uso de header files: Crie 3 arquivos: `exemplo.h`, `exemplo.c` e `mai
   }
   ```
 
-## Matrizes e Strings
+## Pointers
 
-➼➼ Matrizes:
-Uma matriz é uma coleção de variáveis do mesmo tipo que são referenciadas por um nome em comum e que são acessadas por um indice.
-Em C matrizes são variáveis em posições contiguas na memória (variáveis "alinhadas" fisicamente)
-Todo primeiro elemento de uma matriz tem indice 0.
+Pointers são o endereço na memória de uma variável. Uma variável de ponteiro é uma variável especificamente declarada para guardar um ponteiro para seu tipo especificado. Pointers são úteis porque com eles você pode se referenciar a um elemento de uma matriz, permite que funções alterem/modifiquem os parâmetros passados na chamada e ajudam na manipulação de linked lists e outros data types complexos, além de outras coisas.
 
-➼ matrizes unidimensionais (também chamadas de vetores ou arrays):
+"&" é usado para se referir ao ENDEREÇO de uma variável na memória. Por exmplo "m = &count;" pode ser lido como "m recebe o Endereço de memória da variável count". O endereço de count é completamente diferente do Valor de count.
 
-## Exemplo & estrutura:
+"*" é usado para se referir ao VALOR de uma variável, dado o seu endereço. Por exemplo "q= *m;" pode ser lido com "q recebe o Valor que está no endereço de m". Mas como sabemos que "m" tem como valor o endereço de memória de "count", então "q" vai receber o valor de "count".
 
-##
-
-    #include <stdio.h>
-    void main(){
-    	int x[100]; //declarando uma Matriz unidimensional com 100 espaços/elementos
-    		    //Por padrão cada elemento é void, já que só declaramos a variavel
-
-    	int *m, *n; //criando pointers para poder se referir a elementos em específico.
-    	m = &x[2];  //é através dessa notação que acessamos um termo de uma array.
-    	n = &x[3];
-    	//Perceba cuidadosamente: Primeiro criamos dois Pointers com o asterisco *, ou seja, m e n servem especificamente para receber endereços.
-    	//Depois disso, através do &, atribuimos o endereço de elementos do vetor as variáveis m e n. Dessa forma *m e *n se referem ao valor desses elementos.
-    	//Perceba que fazer *m e *n na DECLARAÇÃO faz com que as variáveis sejam pointers desde nascença, e fazer *m e *n no PRINTF só mostra o valor no enderço de m e n
-    	//Cuidado, isso é relativamente simples porém confuso. Aloque bastante antenção nesse tópico porque é a essencia de "matrizes".
-    		//1.m e n são declaradas como pointers(endereço inicial = nulo) -->
-    		//2.recebem endereços de elementos de matriz (assumem esses endereços) -->
-    		//3.retornam o valor desse endereço(do elemento da matriz);
-
-    	int t;
-    	for (t=0; t<100; t++){
-    		x[t] = t; //defindo o valor de cada elemento do vetor via um loop.
-    		printf("t vale %d\n", t);
-    	}
-
-    	printf("O valor no index 2 é: %d\n", *m);
-    	printf("O valor no index 3 é: %d\n", *n);
-    	printf("O endereço do index 2 é: %p\n", m);
-    	printf("O endereço do index 3 é: %p\n", n);
-    }
-
-##
-
-##
-
-Basicamente, se no javaScript para você referir ao elemento de indice 7 em uma array você usaria: "let x = array[7];" Em C você tem que fazer "int \*x; x = &array[7];"
-Simples e literalmente, basta se acostumar/memorizar.
-
-➼ Matriz bidimensional
-São matrizes propriamente. Você sua a notação: x[linhas][colunas]; e para se referir a um elemento usa: x[2][3] para o termo na linha 2 e na coluna 3, por exemplo.
-A primeira linha e a primeira coluna não são 1, e sim 0. Por exemplo, as colunas não são: 1 2 3 4, são: 0 1 2 3; e o mesmo para linhas.
-Dessa forma o elemento x[0][0] é o primero na matriz x.
-
-##Ex & estrutura
+```c
 #include<stdio.h>
-void main(){
-int t, i, num[3][4];
-for(t = 0; t < 3; t++){
-for(i = 0; i < 4; ++i){
-num[t][i] = (t\*4)+i+1;
-printf("Elemento [%d][%d] --> valor:%3d\n", t, i, num[t][i]);
+void main(void){
+    int target, source;
+    int* m;
+    source = 10;
+    m = &source;
+    target = *m;
+    printf("O target é: %d\n", target);
+    printf("O endereço é %d\n", m);
 }
-}
-}
+```
 
-##
+### Dangling Pointers
 
-### Ex com código assustadoramente grande, porém simples. Recomendo ler em um compilador.
-
-### //O editor de texto deixa o codigo parecendo algo mais dificl do que realmente é.
-
-###
-
-#include<stdio.h>
-#include<ctype.h>
-#include<stdlib.h>
-#define TURMAS 3 //constante
-#define ALUNOS 30 //constante
-int nota[TURMAS][ALUNOS]; //variável global
-
-void enterNotas(void){
-int t,i;
-for(t=0; t<TURMAS; t++){
-printf("\nTurma # %d\n", t+1);
-for(i=0; i<ALUNOS; ++i){
-nota[t][i] = getNotas(i);
-}
-}
-}
-
-int getNotas(int num){
-char s[80];
-printf("Diga a nota do aluno %d\n", num+1);
-gets(s);
-return(atoi(s));
-}
-
-void dispNotas(int g[][ALUNOS]){
-int t, i;
-for(t=0; t<TURMAS; t++){
-printf("Turma # %d\n", t+1);
-for(i=0; i<ALUNOS; ++i){
-printf("Aluno #%d e %d\n", i+1, g[t][i]);
-}
-}
-}
-
-void main(){
-char ch, str[80];
-for(;;){
-do{
-printf("Use 'E' para Entrar notas\n");
-printf("Use 'M' para Mostrar notas\n");
-printf("Use 'S' para Sair\n");
-gets(str);
-ch = toupper(\*str);
-} while(ch != 'E' && ch != 'M' && ch != 'S');
-switch(ch){
-case 'E':
-enterNotas();
-break;
-case 'M':
-dispNotas(nota);
-break;
-case 'S':
-exit(0);
-}
-}
-}
-
-###
-
-###
-
-###
-
-------> Matrizes multidemensionais: Usadas em computação gráfica, análise de dados, inteligência artifical e etc.
-➼ Inicialização de matrizes: É possível dar valores para a uma matriz no momento da declaração. Basta seguir a notação usada no exemplo:
-
-##
-
-int sqrs[10][2] = {
-1,1,
-2,4,
-3,9,
-4,16,
-5,25,
-6,36,
-7,49,
-8,64,
-9,81,
-10,100
-}
-
-##
-
-➼➼ Strings:
-Strings em C consistem em matrizes unidimensionais (vetores ou arrays) de caracteres e que é terminada por nulo "\0".
-Os vetores do "tipo" strings devem ser declarados como "char".
-Pelo fato do das strings terminarem em \0 sempre é nessário criar string com um espaço a mais.
-Ex: para criar um string com 10 caracteres você precisaria declarar "char str[11]" (um a mais).
-Algumas funções para manupulação de strings presentes em <string.h>: - strcpy(s1, s2) -> copia a string s2 em s1 - strcat(s1, s2) -> concatena s2 em s1 - strlen(s1) -> retorna o tamanho da string s1
-
-É possivel criar uma matriz de strings str[x][y] onde x seria o número de strings diferentes e y-1 seria o tamanho que cada string poderia ter.
-OBS: Como strings são matrizes unidimensionais, tudo que se aplicava/se usava antes se mantem. válido.
-
-##Exemplo que eu não sei o que faz:
-
-#include<stdio.h>
-#define MAX 100
-#define LEN 80
-char text[MAX][LEN];
-
-void main(){
-register int, i, j;
-printf("Aperte enter sem digitar nada para sair.\n");
-for(t=0; t<MAX; t++){
-printf("%d", t);
-fgets(text[t]); //text[t][0] seria a mesma coisa;
-if(!\*text[t]){
-break;
-}
-for(i=0; i<t; i++){
-for()j=0; text[i][j]; j++){
-putchar(text[i][j]);
-}
-putchar("\n");
-}
-}
-
-}
-
-##
-
-➼➼ Ponteiros (pointers):
-
-Ponteiros são uma das especialidades de C. Eles permitem que funções modifiquem seus argumentos além de que suportam as rotinas de alocação dinâmica e podem aumentar a eficiência do programa.
-Entretando usar ponteiros aumenta a complexidade do problema, podendo fazer erros surgirem.
-Um ponteiro é uma variável que contém um endereço de memória. Esse endereço normalmente é a posição de outra variável na memória.
-Ou seja o valor que essa variável (chamada de ponteiro) contém é justamente um endereço de memória (normalmente um código binário).
-
-Se uma variável vai ser um ponteiro você precisa declarar ela com *. Por exemplo:
-int *m; E apartir de então os valores que m pode possuir são os endereços de outras variáveis.
-Para atribuir um endereço para esse ponteiro basta ter outra variável (int a = 10;) e fazer:
-m = &a; Onde "&" diz qual é o endereço na memória da variável "a".
-Ex: Se a variável "m" contém o endereço da variável "cont", então se "p = \*m;" significa que p vai ter valor igual ao valor que está no endereço de m, ou seja, p = count;
-
-É importante perceber que o \* tem funções diferentes. Ele serve para declarar uma variável como pointer e também serve para resgatar o valor de um endereço.
-
-##exemplo rápido
-void main(){
-int x;
-int *p1, *p2;
-p1 = &x;
-p2 = p1; // agora p1 e p2 apontam para x
-print("%p",p2) //escreve o endereço de x e não seu valor
-//repare que usamos %p para substituir p2 (pointer).
-}
-
-##
-
-Normalmente um ponteiro inteiro (p1 e p2 do exemplo anterior) ocupam 2 bytes de memória e uma variável do tipo float ocupa 8 bytes.
-
-Se você declara um ponteiro (int \*x;) e tenta usar ele sem atribuir um valor, você pode quebrar seu OS.
-Basicamente, como um pointer está diretamente ligado à espaços na memória, se você usa esse ponteiro sem dizer qual parte da memória(endereço) você quer, o compilador vai pegar uma parte aleatória, e por consequência por gerar um efeito dominó que travaria o PC.
-
-O recomendado é que você inicialize um ponteiro como 0 (por mais que não garanta segurança). Ex: int *p = NULL; int x = 10; int *p = &x;
-
-Dangling Pointers: São ponteiros que estão apontando para um indereço de memória inválido. Por exemplo, se um ponteiro está apontando para uma variável dentro do escopo, quando o código sair do escopo a variável vai ser deletada e o ponteiro vai apontar para um endereço inválido (ele Não é redirecionado para o NULL, sendo necessário fazer isso "manualmente").
+São ponteiros que estão apontando para um indereço de memória inválido. Por exemplo, se um ponteiro está apontando para uma variável dentro do escopo, quando o código sair do escopo a variável vai ser deletada e o ponteiro vai apontar para um endereço inválido (ele Não é redirecionado para o NULL, sendo necessário fazer isso "manualmente").
 
 ### Ponteiros e matrizes
 
 C fornece dois métodos para acessar elementos de matrizes:
--> aritimética de ponteiros: Mais rapida. Consiste em usar atribuir um pointer a uma matriz.
-Ele vai se referir ao primeiro elemento dessa matriz. Apartir daí, para se referir a outros
-elementos em outras posições basta somar um inteiro até o index desse elemento.
 
-```c
-char str[80], _p1;
-p1 = str; //o ponteiro se refere ao primeir o elemento de uma matriz
-printf("%d", _(p1+4)); // vai printar o 5 elemento pois \*(p1+4) se refere ao 5 index.
-```
+- Aritimética de ponteiros:
 
--> indexação de matrizes: é basicamente usar colchetes e o index do elemento.
-No caso do exemplo anterior, fariamos printf("%d", str[4]);
+  Mais rapida. Consiste em usar atribuir um pointer a uma matriz. Ele vai se referir ao primeiro elemento dessa matriz. Apartir daí, para se referir a outros elementos em outras posições basta somar um inteiro até o index desse elemento.
 
-Ponteiros também podem ser organizados em matrizes, ou seja, pode existir uma matriz de ponteiros.
-Ex: int *x[10]; Para criar a matriz com espaço para 10 pointers
-x[2] = &var; Para dar ao pointer de index 3 o endereço da variável "var"
-*x[2]; Para encontrar o valor de "var";
+  ```c
+  char str[80], *p1;
+  p1 = str; //refere-se ao primeiro elem de uma matriz
+  printf("%d", *(p1+4)); // vai printar o 5 elemento pois *(p1+4) se refere ao 5 index.
+  ```
 
-```c
-void someInfo (int num){
-static char \*err[] = {
-"Atribuindo 'Manualmente' os valores da matriz\n",
-"Cada string é um elemento da matriz\n",
-"E a matriz 'err' possue ponteios para cada string\n"
-};
-printf("%s", err[num]);
-}
-//Por exemplo, se eu chamar someInfo(2) a função vai printar a terceira string.
-```
+- indexação de matrizes:
+  É basicamente usar colchetes e o index do elemento. No caso do exemplo anterior, fariamos `printf("%d", str[4])`;
 
 ### Ponteiros e funções:
 
-Você já viu que um ponteiro pode armazenar o endereço de memória de uma variável, mas e quanto armazenar o de uma função? As funções, assim como as variáveis Possuem endereço na memória (stack e code area).
-Para obter o endereço de uma função precisamos criar um pointer na mesma estrutura da função que queremos e então igualar ele à função original.
-##Ex:
-float (\*fp) (int , int); // Declaration of a function pointer.
-float func( int , int ); // Declaration of function.
-fp = func; // Assigning address of func to the fp pointer.
+Você já viu que um ponteiro pode armazenar o endereço de memória de uma variável, mas e quanto armazenar o de uma função? As funções, assim como as variáveis Possuem endereço na memória (stack e code area). Para obter o endereço de uma função precisamos criar um pointer na mesma estrutura da função que queremos e então igualar ele à função original:
 
 ```c
-##Exemplo prático:
+float *fp (int, int); // Declaration of a function pointer.
+float func(int, int); // Declaration of function.
+fp = func; // Assigning address of func to the fp pointer.
+```
+
+```c
 #include <stdio.h>
-int add(int a,int b){
-int c=a+b;
-return c;
+
+int soma(int a, int b) {
+	return a+b;
 }
+
 int main(){
-int a,b;
-int (*ip)(int,int); //repare na estrutura/sintaxe: (*ip)
-int result;
-printf("Enter the values of a and b : ");
-scanf("%d %d",&a,&b);
-ip=add; //ip é igual ao Nome (tecnicamente, o endereço) da função.
-result=(*ip)(a,b); //e o valor de ip é a função em si. Pense que (*ip) é substituido por "add"
-printf("Value after addition is : %d",result);
-return 0;
+	int (*ip)(int, int) = &soma;
+	printf("%d",(*ip)(10, 10));
+	printf("%d",soma(10, 10));
+	return 0;
 }
+
 ```
 
 ## Alocação dinâmica
 
-Ponteiros fornecem o suporte necessário para executar alocação dinâmica, isto é: O programa consegue obter memória enquanto está em execução.
-Imagine que você quer criar uma array com o tamanho igual a resposta do usuário. Como o programa precisa rodar para fazer scanf, não vai ser possivel criar a array, ou seja, alocar memoria na execução do programa. Para que isso possa ocorrer, precisamos alocar a memória dinâmicamente ao usar uma das 3 funções principais:
-malloc(), calloc(), free(); Essa funções estão em <stdlib.h>
-A alocação dinâmica em C basea-se nas funções malloc() e calloc () para alocar memória e free() para liberar memoria Alocada. Elas trabalham em conjunto e utilizam/dependem do "heap" (região de memória livre) para manter uma lista de armazenamento disponível.
-Enquanto malloc vai criar um único Bloco de armazenamento, calloc vai criar vários blocos. Imagine que a memória RAM é um retangulo e que ao consumir memoria preenchemos esse retangulo com quadrados.
-Ao usar malloc criariamos um único quadrado com tamanho X e ao usar calloc criariamos n quadrados com x/n de tamanho. Repare que o tamanho não muda, mas o metodo de alocação sim.
-Sintaxe do malloc(): ptr=(cast-type*)malloc(byte-size);
-Sintaxe do calloc(): ptr=(cast-type*)calloc(number, byte-size);
-Sintaxe do free(): free(ptr)
+Ponteiros fornecem o suporte necessário para executar alocação dinâmica, isto é: O programa consegue obter memória enquanto está em execução. Imagine que você quer criar uma array com o tamanho igual ao input do usuário. Como o programa precisa rodar para fazer scanf e como não é possivel criar variáveis durante a execução do programa, a não ser que usemos uma das 2 funções principais: malloc() ou calloc(), que estão em `<stdlib.h>`.
 
-Vejamos dois exemplos, um usando malloc() e outro usando calloc():
+A alocação dinâmica em C basea-se nas funções malloc() e calloc() para alocar memória e free() para liberar memoria Alocada. Elas trabalham em conjunto e utilizam/dependem do "heap" (região de memória livre) para manter uma lista de armazenamento disponível. Enquanto malloc vai criar um único Bloco de armazenamento, calloc vai criar vários blocos. Imagine que a memória RAM é um retangulo e que ao consumir memoria preenchemos esse retangulo com quadrados. Ao usar malloc criariamos um único quadrado com tamanho X e ao usar calloc criariamos n quadrados com x/n de tamanho. Repare que o tamanho não muda, mas o metodo de alocação sim. Vejamos 2 exemplos:
 
 ```c
 //Usando malloc()
