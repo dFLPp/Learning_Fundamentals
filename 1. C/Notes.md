@@ -1,5 +1,27 @@
 # C - anotações
 
+## Sumário
+
+1. [Introdução](#introdução)
+2. [Workflow de um programa](#workflow-de-um-programa)
+3. [Layout de memória](#layout-de-memória)
+4. [Indentificadores](#indentificadores)
+5. [Tipos de dados](#tipos-de-dados)
+6. [Declaração de variáveis](#declaração-de-variáveis)
+7. [Escopos de variáveis](#escopos-de-variáveis)
+8. [Classes de variáveis](#classes-de-variáveis)
+9. [Operadores](#operadores)
+10. [Estruturas de controle de fluxo](#estruturas-de-controle-de-fluxo)
+11. [Funções](#functions)
+12. [Macros e Header files](#macros-e-header-files)
+13. [Pointers](#pointers)
+14. [Alocação dinâmica](#alocação-dinâmica)
+15. [Structs](#estruturas-structsstructures)
+16. [Enums](#enumeradores-enums)
+17. [Unions](#uniões-unions)
+18. [Manipulação de arquivos](#manipulação-de-arquivos)
+19. [Conclusão](#conclusão)
+
 ## Introdução
 
 C é uma linguagem de programação compilada de propósito geral, estruturada, imperativa e procedural criada em 1972 por Dennis Ritchie na empresa AT&T Bell Labs para desenvolvimento do sistema operacional Unix.
@@ -367,7 +389,7 @@ void main(int argc, char *argv[]){
 }
 ```
 
-#### Recursividade:
+### Recursividade
 
 Ocorre quando uma função chama a sí mesmo dentro dela.
 Em um dos exemplos acima (sobre farorial) você conseguirá perceber o uso de recursividade.
@@ -396,7 +418,7 @@ long unsigned int Fat(long unsigned int n){ //essa é a atribuição/criação p
 
 ```
 
-### Macros e Header files
+## Macros e Header files
 
 Macros são instruções que você pode passar para o compilador de modo a "personalizar" a criação do executável. Alguns macros são usados nas source files (.c) e outros são exclusivos das header files (.h). Header files é são arquivos auxiliares aos arquivos de código. Eles auxiliam no processo de compilação ao evitar recompilar arquivos que não foram modificados além de serem usados para estruturar o código de melhor forma. Vejamos alguns macros e seu uso com header files.
 
@@ -484,7 +506,7 @@ C fornece dois métodos para acessar elementos de matrizes:
 - indexação de matrizes:
   É basicamente usar colchetes e o index do elemento. No caso do exemplo anterior, fariamos `printf("%d", str[4])`;
 
-### Ponteiros e funções:
+### Ponteiros e funções
 
 Você já viu que um ponteiro pode armazenar o endereço de memória de uma variável, mas e quanto armazenar o de uma função? As funções, assim como as variáveis Possuem endereço na memória (stack e code area). Para obter o endereço de uma função precisamos criar um pointer na mesma estrutura da função que queremos e então igualar ele à função original:
 
@@ -518,430 +540,246 @@ A alocação dinâmica em C basea-se nas funções malloc() e calloc() para aloc
 
 ```c
 //Usando malloc()
-#include<stdio.h>
-#include<stdlib.h>
-int main(){
-int n, i, _memoria, soma = 0;
-printf("Diga quantos elementos sua array vai ter: ");
-scanf("%d",&n);
-memoria=(int_)malloc(n*sizeof(int)); //estamos alocando valores inteiros por isso o (int*) é necessario
-//dentro do malloc estamos criando um único bloco com o tamanho em bytes ao equivalente à n vezes o tamnho de um inteiro.
+#include <stdio.h>
+#include <stdlib.h>
 
-    if(memoria==NULL){
-        printf("Quando não é possivel armazenar o retorno é NULL");
-        exit(0);
+int main()
+{
+    int s = -1, i = 0;
+    int *arr;
+    printf("Diga o tamanho da array: ");
+    scanf("%d", &s);
+
+    arr = (int *)malloc(s * sizeof(int));
+    //pense em 1 bloco com tamanho s vezes o tamanho de um int
+
+    for (i = 0; i < s; i++)
+    {
+        printf("arr[%d] = ", i);
+        scanf("%d", arr + i);
     }
 
-    printf("diga os elementos da array: ");
-    for(i=0; i<n; i++){
-    scanf("%d",  memoria+i);
-    soma += *(memoria+i);
+    for (i = 0; i < s; i++)
+    {
+        printf("arr[%d] = %d\t", i, *(arr + i));
     }
-    printf("\nA soma dos elementos é: %d", soma);
-    free(memoria);
-
-return 0;
+    free(arr);
+    return 0;
 }
 ```
 
 ```c
 //usando calloc()
-#include<stdio.h>
-#include<stdlib.h>
-int main(){
-int n, i, _memoria, soma = 0;
-printf("Diga quantos elementos sua array vai ter: ");
-scanf("%d",&n);
-memoria=(int_)calloc(n, sizeof(int)); //estamos alocando valores inteiros por isso o (int\*) é necessario
-//dentro do malloc estamos criando um único bloco com o tamanho em bytes ao equivalente à n vezes o tamnho de um inteiro.
 
-    if(memoria==NULL){
-        printf("Quando não é possivel armazenar o retorno é NULL");
-        exit(0);
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int s = -1, i = 0;
+    int *arr;
+    printf("Diga o tamanho da array: ");
+    scanf("%d", &s);
+
+    arr = (int *)calloc(s, sizeof(int));
+    //pense em 's' blocos de tamanho de um int
+
+    for (i = 0; i < s; i++)
+    {
+        printf("arr[%d] = ", i);
+        scanf("%d", arr + i);
     }
 
-    printf("diga os elementos da array: ");
-    for(i=0; i<n; i++){
-    scanf("%d",  memoria+i);
-    soma += *(memoria+i);
+    for (i = 0; i < s; i++)
+    {
+        printf("arr[%d] = %d\t", i, *(arr + i));
     }
-    printf("\nA soma dos elementos é: %d", soma);
-    free(memoria);
-
-return 0;
+    free(arr);
+    return 0;
 }
 ```
 
 ## Estruturas (structs/structures):
 
-Em C uma estrutura é como se fosse uma constructor function do JavaScript ou uma classe do python. Você declara variáveis/características que um elemento dessa struc teria e então cria um variável seguindo esse "blueprint". As variáveis dentro da estrutura são chamadas de elementos ou campos.
-Depois que você cria a struct, para criar uma variável desse tipo você precisa usa: "struct <nome da struct> <variavel>"
-Campos de uma estrutura também podem ser uma estrutura. Nesse caso se diz que as estruturas estão aninhadas.
-Para se referir ao valor de um campo de uma variável do "tipo" da struct, você usa o ponto, patricamente igual ao que ocorre em JS.
-Ex: Se o campo "campo1" é inteiro fazemos simplismente e1.campo1 = 12;
-Ex2: Se o campo "campo2" é uma string precisamos usar a função strcpy, que fica em <string.h>
-strcpy(e1.campo2, "Transmitndo essa string para o campo2");
+Em C, uma estrutura é usada para criar objetos ou estruturas de dados customizadas. Em linguagens de programações modernas utiliza-se de POO (programação orientada à objetos). As variáveis dentro da estrutura são chamadas de elementos ou campos. Campos de uma estrutura também podem ser uma estrutura. Nesse caso se diz que as estruturas estão aninhadas. Para se referir ao valor de um campo de uma variável do "tipo" da struct, você usa o ponto (st.prop).
 
 ```c
-
 #include<string.h>
 #include<stdio.h>
 
-void main(){
-// Criação de uma struct
-struct endereco{
-char rua[40];
-int numero;
-char bairro[20];
-char cidade[20];
-char estado[3];
-char cep[10];
-}; //poderia declarar variável desse "tipo" aqui, nessa linha.
-//criação de uma variavel que é do "tipo" "endereco"
-struct endereco variavel1;
-//atribuindo valores para cada campo:
-variavel1.numero = 666;
-strcpy(variavel1.rua, "Fim da rua");
-strcpy(variavel1.bairro, "Fim do mundo");
-strcpy(variavel1.estado, "ZE");
-strcpy(variavel1.cep, "14444-144");
-printf("O seu endereço é:\n");
-printf("Rua: %s, número: %d\n", variavel1.rua, variavel1.numero);
-printf("No estado %s com o CEP: %s\n", variavel1.estado, variavel1.cep);
-printf("...");
+struct Endereco{
+    char estado[2];
+    char cidade[50];
+    char rua[50];
+    int numero;
+};
+
+
+int main(){
+    struct Endereco endereco1 = {0};
+
+    strcpy(endereco1.estado, "RJ");
+    strcpy(endereco1.cidade, "Alguma cidade aí");
+    strcpy(endereco1.rua, "Alguma rua aí");
+    endereco1.numero = 23;
+
+    return 0;
 }
 ```
 
 ### typedef:
 
-O C permite que sejam definidos explicitamente novos nomes aos tipos de dado ao usar a keywork "typedef". Normalmente utiliza-se typedef para trocar o nome de um data type já existente, aumentando a portabilidade do código. O formato geral é: typedef <tipo ja existente> <novoNome>; Ex: typedef float real. Agora eu posso usar "real" no lugar de float. Ex: real x;
-
-typedef pode ser útil para simplificar a declaração de variáveis de estrutura. Ex:
+No exemplo acima, criamos o objeto `endereco1` usando o tipo `struct Endereco`. Podemos dar um novo nome para esse tipo usando `typedef`.
 
 ```c
-//Normalmente:
-struct mystruct{
-unsigned x;
-float f;
-};
-struct mystruct s; //declaração
+typedef struct{
+    char estado[2];
+    char cidade[50];
+    char rua[50];
+    int numero;
+} Endereco;
 
-    //Com typedef:
-    struct mystruct{
-    	unsigned x;
-    	float f;
-    };
-    typedef struct mystruct estrutura1;
-    estrutura1 w; //declaração.
-    //"struct mystruct" foi trocado por "estrutura1"
-```
 
-Também é possivel criar matrizes e vetores de estruturas (onde todos os elementos são variáveis do tipo "estrutura" (é literalmente uma "lista de dicionários", falando em python)
-Para manipular os dados de um vetor desse tipo, você precisa especificar o index com "[]" e o campo com ".".
-
-```c
-
-struct teste{
-char x;
-int y;
-flaot z;
-char s[10];
+int main(){
+    Endereco endereco1 = {0};
+    // ...
+    return 0;
 }
-struct teste v1;
+```
 
-struct teste vetor[100]; //cria a variável "vetor" (matriz unidimensional) com elementos da struct "teste"
-strcpy(vetor[0].s,"Abacate"); //O primeiro elemento do vetor, no campo s, vai ter "Abacate".
+### Struct padding
 
-//Structs como argumento de função
+C é uma linguagem que preza por eficiência e que é usada em projetos do mundo real, tipo, foguetes, satélites e etc. Muitos, muitos, muitos detalhes não expostos nessas anotações são levados em consideração na hora de escrever qualquer linha. Um desses detalhes é o struct padding.
 
-func1(v1.x); //passa o valor do caractere x;
-func1(v1.s[2]); //passa o valor do caractere de s[2];
+Quando você cria uma struct, meḿoria é separada para cada campo. Entretando dependendo do processador e da arquitetura usada, o tamanho da struct pode ser maior. Se o processador é de 32bits, ele lê a cada ciclo/por vez 4 bytes e se o processador for de 64bits, ele lê a cada ciclo/por vez 8 bytes.
 
-func1(&v1.x); //passa o endereço do caractere x;
-func1(&v1.s[2]); //passa o endereço do caractere de s[2];
+```c
+struct student{
+    char a; // tipo char tem tamanho 1 byte
+    char b; // tipo char tem tamanho 1 byte
+    int c; // tipo int tem tamanho 4 bytes
+}, st1;
+//O tamanho de st1 "teoricamente" seria de 6, porém dependendo do processador e da ordem das properties, o tamanho pode ser maior.
 
 ```
 
-### Struct padding:
+No caso do exemplo anterior, em um processador e 32bits ele "leria" 1 byte de "a" e de "b" e mais 2 bytes de "c", precisando de outro ciclo para ler os 2 bytes finais de "c". Repare que o segundo "ciclo" de leitura do processador foi ruim/ineficaz, sobrando 2 bytes de leitura.
 
-Quando você cria uma struct, meḿoria é separada para cada campo. Entretando dependendo do processador e da arquitetura usada, o tamanho da struct pode ser maior.
-Se o processador é de 32bits, ele lê a cada ciclo/por vez 4 bytes e se o processador for de 64bits, ele lê a cada ciclo/por vez 8 bytes. Veja o exemplo:
+Struct padding vai ser a funcionalidade automatica de obter o melhor modo de leitura possivel, usando todas as 8 ou 4 cargas de cada ciclo e tentando não dividir as variaveis/properties pela metade. Para que isso seja feito, o compilador automaticamente cria uma linhas vazias para ocupar espaço, entre outras estratégias, como usar diretivas ao pré-processador ([Macros](#macros-e-header-files)).
 
-```c
+### Ponteiros de Structs
 
-    struct student{
-      char a; // tipo char tem tamanho 1 byte
-      char b; // tipo char tem tamanho 1 byte
-      int c; // tipo int tem tamanho 4 bytes
-    }, st1;
-    //O tamanho de st1 "teoricamente" seria de 6, porém dependendo do processador e da ordem das properties, o tamanho pode ser maior.
-
-```
-
-No caso do exemplo anterior, em um processador e 32bits ele "leria" os 1 bytes de "a" e de "b" e mais 2 bytes de "c", precisando de outro ciclo para ler os 2 bytes finais de "c".
-Repare que o segundo "ciclo" de leitura do processador foi ruim/ineficaz, sobrando 2 bytes de leitura.
-Struct padding vai ser a funcionalidade automatica de obter o melhor modo de leitura possivel, usando todas as 8 ou 4 cargas de cada ciclo e tentando não dividir as variaveis/properties pela metade. Para que isso seja feito, o compilador automaticamente cria uma linhas vazias para ocupar espaço.
-Em projeto real/serio (tipo, fazer um satelite), cada byte precisa ser economizado e são detalhes como esse que dão liberdade ao programador. BTW, se você quiser evitar o struct padding, você pode usar a deritiva "#pragma pack(1)" no início do código, porém não use, você não precisa.
-
-## Ponteiros e Structs
-
-Ponteiros para uma estrutura passam para funções apenas o endereço da estutura.
-Uma das vantagem é que usando ponteiros você, através da função, alterar o valor de um campo da struct.
-Para criar/passar um ponteiro que se refere a TODA a struct, para dentro de uma função você faz: "void funcao(struct <NomeStruct> \*x);" Onde x é o ponteiro para a struct <NomeStruct>.
-Esse ponteiro se refere a TDOA struct. Para fazer ele se referir apenas a um campo, usa-se a setinha: printf("%d", x->campo1); Dessa forma "x->campo1" é o valor atual desse campo.
+Ponteiros de uma struct passam apenas o endereço da estutura. São normalmente usados quando vc quer passar um objeto/instância de uma struct para uma função. Para acessar as props dessa struct utiliza-se da notação de seta (st->prop).
 
 ```c
-
-#include <dos.h> // aparentamente não vem instalado
 #include <stdio.h>
-#include <stdlib.h>
 
-struct tempo{
-int horas;
-int minutos;
-int segundos;
-};
+typedef struct
+{
+    int TYPE;
+    int operand1;
+    int operand2;
+} Operation;
 
-void mostrarH(struct tempo \*t){
-//Esse é o "jeito"/nomeclatura usada para usar um ponteiro da struct "tempo" em uma função.
-//Dessa forma a variável/pointer t vai apontar para a struct "tempo" e pode alterar os valores que o campo dela tem.
+int execute(Operation *op)
+{
+    switch (op->TYPE)
+    {
+    case 0:
+        return op->operand1 + op->operand2;
 
-printf("%02d: ", t->horas);
-printf("%02d: ", t->minutos);
-printf("%02d \n", t->segundos);
+    case 1:
+        return op->operand1 * op->operand2;
 
-//repare no código: t->horas. Esse é o jeito/modo de, utilizando um ponteiro que se refere a TODA a struct, fazer o ponteiro se referir especificamente a um campo, usando a setinha "->"
-};
-
-void atualizarH(struct tempo \*t){
-t->segundos++;
-if(t->segundos==60){
-t->segundos = 0;
-t->minutos++;
-}
-if(t->minutos==60){
-t->minutos = 0;
-t->horas++;
-}
-if(t->horas==1){
-t->horas = 0;
-printf("Parabéns, você ficou 1h com o programa aberto =|");
-exit(0);
-}
+    default:
+        return 0;
+    }
 }
 
-void main(){
-int i;
-struct tempo sysTime; //Como eu declarei a struct "fora" de qualquer coisa, ela é meio que global.
-sysTime.segundos=0;
-sysTime.minutos=0;
-sysTime.horas=0;
-for(i=0; i<60; i++){
-atualizarH(&sysTime);
-mostrarH(&sysTime);
-}
-}
+int main()
+{
+    Operation op = {0};
 
+    op.operand1 = 7;
+    op.operand2 = 3;
+    op.TYPE = 1;
+
+    printf("Resultado da operação: %d", execute(&op));
+
+    return 0;
+}
 ```
 
-# Enumeradores:
+## Enumeradores (Enums):
 
-O tipo "enum" é usado para criar uma enumeração, um conjunto de constantes inteiras que especifica todos os valores legais que uma variável desse tipo pode ter.
-É mais fácil ver do que, tipo, ler? Ex:
+O tipo "enum" é usado para criar uma enumeração, normalmente sendo usada para especificar todos os valores legais que uma variável pode ter, No exemplo anterior, com structs, ao invés de classificar o tipo de operação por números inteiros poderiamos usar enums:
 
 ```c
+typedef enum{
+    ADD = 0,
+    MUL,
+} OP_TYPE;
 
-    enum diaSemana{
-    	domingo = 1, //Por padrão, se você não define um valor, ele começa com zero
-    	segunda, // tratará segunda como 2
-    	terça, // tratará segunda como 3
-    	quarta, // tratará segunda como 4
-    	quinta, // tratará segunda como 5
-    	sexta, // tratará segunda como 6
-    	sabado // tratará segunda como 7
+typedef struct{
+    OP_TYPE TYPE;
+    int operand1;
+    int operand2;
+} Operation;
 
-    }
-    // Para criar uma variável que é desse tipo você faz:
-
-    diaSemana dia1, dia2, dia3;
-    dia1 = sabado;
-    dia2 = segunda;
-    dia 3 = quarta;
-
+// O resto do código é o msm
 ```
 
-O ponto chave para o entendimento de uma enumeração é que cada símbolo (cada linha/valor) representa um valor inteiro, dessa forma eles podem ser usados em qualquer lugar que um inteiro seria usado.
-O proximo valor de um símbolo é igual ao antigo + 1. Ex:
-
-```c
-
-    enum a{
-    	z, //tratará com 0
-    	d, //tratará com 1
-    	b = 100, //tratará com 100
-    	z, //tratará com 101
-    	w  //tratará com 102
-    }
-    a abacate;
-    abacate = b;
-    //OBS: talvez o local de maior utilidade de enums seja no switch. Para cada "case" você pode ter um "simbolo" enum.
-    switch (abacate){
-    	case d
-    		printf("nah...");
-    		break;
-
-    	case b:
-    		printf("ABACATE");
-    		break;
-
-    	default:
-    		printf("...");
-    		break;
-    }
-
-```
-
-## Uniões:
+## Uniões (unions)
 
 Em C uma "union" é uma posição de memória que é compartilhada por duas ou mais variáveis diferentes, geralmente de tipos diferentes e em momentos diferentes.
-Você declara unions quase igual a como você declara structs. Ex:
 
 ```c
+typedef union{
+    int i;
+    float f;
+} Uniao;
 
-    //declaração/criação de uma union:
-    union primeiroUM{
-    	int i,
-    	char ch;
-    };
-    // Declarando uma variável que participa/realiza essa union:
-    union primeiroUM variavel1;
+void doSomething(Uniao *un){
+    un->f = 2.3;
+}
 
-    //Acessando/alterando valores dessa variável:
-    variavel.i = 10;
-
-    //atribuindo valores a union através de uma função (bem parecido com o que fazemos em structs:
-    void func1(union primeiroUM *un){
-    	un->i = 12;
-    }
-
+int main(){
+    Uniao un = {0};
+    un.i = 10;
+    doSomething(&un);
+    return 0;
+}
 ```
 
-Quando uma union é criada o compilador criar uma variável grande o suficiente para comportar o maior tipo de variável da únion.
-No caso do exemplo anterior, criaria uma variavel com 2 bytes de tamanho (que é o tamanho de um int)
-Basicamente o inteiro (int) é armazenado em 2 bytes e caractere (char) fica em 1 desses 2 bytes, "se alternado".
-Usar union pode ajudar na produção de código independente da máquina (portável)
+## Manipulação de arquivos
 
-## Manipulação de arquivos.
-
-C não possue comandos de I/O. Para realizar alguma operação de input ou output é necessário importar uma biblioteca e isso permite que diferentes formas de resolver um problema existam.
-A biblioteca padrão do C que disponibiliza todas as funcionalidades em repeito à I/O é a <stdio.h>
+C não possue comandos de I/O por padrão. Para realizar alguma operação de input ou output é necessário importar bibliotecas, ou seja, existem diferentes formas de fazer a msm coisa. Para operações de input (I) e output(O) que involvem o terminal de comandos normalmente utiliza-se o `<stdio.h>`.
 
 ### Stream e arquivos
 
-O sistema de I/O do C provê um nível de abstração aos programadores, deixando as coisas mais fáceis.
-Essa "abstração" é chamada de stream e o dispositivo real é chamado de arquivo.
-C pode trabalhar com diversos dispositivos, sejam terminais, acionadores de disco, etc.
-Embora esses dispositivos sejam diferentes, o "sistema de arquivos com buffer" do C transforma esses diferentes dispostivos (fontes de input) em algo generalizado chamado de stream.
+Um conceito meio abstrato e entender é o de stram. Basicamente o computador pode se comunicar com diversos equipamentos, através de diferentes canais, usando diferentes protocolos. Em outras palavras, um computador pode enviar ou receber dados do mouse, através do cabo usb, ou enviar informações pelo ar para uma empressora do outro lado da sala. Para que programadores consigam interagir com esses diferentes equipamentos sem precisar entender a metodologia de comunicação específica existe o conceito de stream: um tradutor universal.
 
-Ou seja, o sistema de arquivos do C se conecta com dispositivos e cria uma abordagem "generalista", de modo que consiguamos usar/mexer no dispositivo independente de qual ele seja (porque o C vai criar um padrão chamado de stream).
+Nessas anotações vamos nos restringir a como receber informações e enviar informações através de arquivos. Arquivos, no contexto de c e linux, vão desde documentos que estão armazenados no disco rigido até a representação virtual de uma impressora, sendo acessados/modificados pelo nosso programa (que existe na mermória RAM) através de uma stream específica o tipo de arquivo.
 
-### Stream em C
+Quando você abre um arquivo, ele se associa/se liga com uma stream, que então "padroniza" o arquivo, e deixa ele "bonito", de modo que o programador/usuário consiga usar/modificar o arquivo. Existem duas formas de streams, ou seja, C pode receber/analisar/interagir com 2 tipos de input de arquivos:
 
-Entenda stream como um meio termo: Um "Interpretador" entre a máquina/dispositivo externo com o C/sistema.
+- Texto: Uma stream de texto é uma sequência de caracteres onde, dependendo do dispositivo externo, talvez seja necessário coverter/traduzir alguma parte do input que esse dispositivo está mandando. Os dados são gravados no formato ASCII.
 
-Outro modo de interpretar (é importante você pegar a ideia) é que streams é uma sequência de dados que mapeia e organiza input E output.
-Ou seja, existem diversos tipos de input e o stream basicamente vai converter esses inputs em algo "padrão"/universal.
+- Binário: Uma stream binária é uma sequência de bytes, de modo que o "conteúdo" original (que está no dispositivo original) é passado sem perda de integridade (não há conversão/tradução). Os dados são gravados no formato binary file (.bin)
 
-Quando você abre um arquivo, ele se associa/se liga com uma stream, que então "padroniza" o arquivo, e deixa ele "bonito", de modo que o programador/usuário consiga usar/modificar o arquivo.
+### Modo de abertura
 
-Existem duas formas de streams, ou seja, C pode receber/analisar/interagir com 2 tipos de input de arquivos:
--> texto;
--> binário;
+Para abrir um arquivo você precisa, primeiro, saber o que vai fazer com ele: vai escrever nele? Onde? No início ou no final? Se for em outro local (no meio por exemplo), como você vai chegar naquela posição específica?
+Para restringir a imensa capacidade de programadores inexperientes de fazer merda, você deve escolher um modo de abertura: Só leitura (r), Só escrita (sobrescrita) (w), Só anexo (adiciona no final) (a) ou alguma combinação entre as 3 (w+, r+ e outras variações com um 'b' no final, para arquivos binários).
 
-1. Uma stream de texto é uma sequência de caracteres onde, dependendo do dispositivo externo, talvez seja necessário coverter/traduzir alguma parte do input que esse dispositivo está mandando.
+### Usando ponteiros
 
-2. Uma stream binária é uma sequência de bytes, de modo que o "conteúdo" original (que está no dispositivo original) é passado sem perda de integridade (não há conversão/tradução)
+"Ponteiros" são a cola que une o sistema C com o I/O. Um ponteiro de arquivo é uma Variável ponteiro (que já vimos antes) do tipo FILE que é usada para ler e escrever arquivos. Através da função fopen() o C vai abrir/criar uma stream para uso e associa um arquivo a essa stream, retornando um ponteiro de arquivo. Dessa forma é possível alterar/manipular arquivos no C (através do ponteiro).
 
-### Arquivos em C
-
-Em C (e no linux) um "arquivo" pode ser qualquer coisa, desde uma foto até uma impressora.
-É associada uma stream a tipos de arquivo, de modo que a abertura do arquivo seja feita do modo específico que é necessário.
-
-Cada stream possue uma estrutura de controle de arquivo que, básicamente, é um editor de texto e descreve tudo o que é feito.
-Dessa forma, cada byte de um arquivo possue um endereço único que é o deslocamento realitvo ao início do arquivo.
-
-É possivel gravar dados no formato de caracter (no C é ASCII) ou em binário (binary file).
-Existem rotinas/funções para manipulação de arquivos "texto" e de manipulação de arquivos "binários".
-
-"Ponteiros" são a cola que une o sistema C com o I/O.
-Um "ponteiro de arquivo" é um ponteiro para informações que definem um arquivo, incluindo nome, status, etc.
-Um ponteiro de arquivo é uma Variável ponteiro (que já vimos antes) do tipo FILE, usada para ler e escrever arquivos.
-
-Através da função fopen(), o C vai abrir/criar uma stream para uso e associa um arquivo a essa stream, retornando um ponteiro de arquivo.
-Dessa forma é possível alterar/manipular arquivos no C.
-
-Para abrir um arquivo em C fazemos:
-FILE _fopen(const char_ <path até o arquivo>, const char\* <modo>);
-Onde <modo> é uma das possiveis operações que você pode fazer com o arquivo.
-Por exemplo, se você quer Abrir um "arquivo de texto para leitura"(não pode ser alterado) deve-se usar o modo "r".
-Para Criar um "arquivo de texto para leitura/escrita" usa-se "w+" e para abri-lo "r+"
-Para criar um "arquvio binário para leitura/escrita" usa-se "w+b" e para abir-lo "r+b"
-
-Para anexar/adicionar conteúdo no Final de um arquivo(anexar) usa-se "a" para arquivos de texto e "a+b" para arquivos binários.
+Em suma, vc declara um ponteiro do tipo `FILE`, chama a função `fopen()`, faz o que tem que fazer e então chama a função `fclose()`. Fechar a stream (equivalente à chamar fclose ou a liberar o ponteiro) é importante para: 1. salvar as modificações e 2. liberar a memória usada pela stream.
 
 ```c
-FILE \*fp; //declaração de um "ponteiro de arquivo"
-if((fp=fopen("teste", "w"))== NULL){
-printf("Arquivo não pode ser aberto =(\n");
-exit(1);
-}
-```
-
-A função fclose() fecha uma stream que foi aberta pelo fopen(). Se tiver algum dado não salvo (algum dado permanece no buffer), fclose primeiro salva e então fecha.
-Para fechar uma arquivo usa-se:
-int fclose("FILE \*fp");
-Onde "fp" é o "ponteiro de arquivo" criado/declarado/devolvido pela função fopen().
-Se fclose() vale 0, então o fechamento ocorreu bem. Qualquer outro valor é erro.
-
-No C existe a função fputc() para escrever caracteres e fgetc() para ler caracteres.
-OBS: também existem funções que recebem e escrevem strings: fputs() e fgets()
-Protótipo de utilização:
-
-```c
-//Em ambos os casos *fp é o ponteiro de arquivo para um arquivo.
-//Ou seja fp = fopen("arquivo", "modo");
-int fputc(int ch, FILE *fp);
-int fgetc(FILE \*fp);
-```
-
-```c
-// Exemplo de progrma que lê o nome do arquivo e mostra na tela.
-
-    #include<stdio.h>
-    #include<stdlib.h>
-
-    void main(int argc, char *argv[]){ //recebe o nome do arquivo com um parâmetro do programa. Esse código é "padrão", copie e cole para ter essa funcionalidade
-    	FILE *fp;
-    	char ch;
-    	if(argc != 2){ //Basciamente, argc é 2 se o nome do arquivo for válido e quando o programa está rodando, ou seja, "se o nome do arquivo não existir..."
-    		printf("Seu arquivo não tem nome...\nComo isso é um arquivo então??\n");
-    		exit(1);
-    	}
-    	if((fp = fopen(argv[1], "r")) == NULL){ //Estamos definindo/criando o "ponteiro de arquivo" (fp) dentro do if, e ele se refere ao primeiro elemento de argv, ou seja, o nome do arquivo.
-    		printf("O nome do arquivo é considerado inexistente, logo --> :(\n");
-    		exit(1);
-    	}
-    	ch = getc(fp); //vai ler um caractere de fp. Mas fp é um ponteiro de arquivo do arquivo atual, ou seja, vai ler um caractere do nome do arquivo.
-    	while (ch!=EOF){ //Estamos fazendo um loop por uma sequencia de caracteres (o nome do arquivo). EOF representa o final do arquivo, ou seja: "enquanto não final de arquivo..."
-    		putchar(ch); //imprime o Caractere atual na tela
-    		ch = getc(fp); //O caractere muda e passa a ser o proximo. Ou seja, ele começa com a primeira letra do nome do arquivo e vai assim, até o nome acabar
-    	}
-    	fclose(fp); //importante fechar o arquivo. Otherwise você bloqueia memória para sempre.
-    }
-```
-
-```c
-// Exemplo: programa que lê um arquivo texto e imprimi seu conteúdo na tela.
+// Exemplo: programa que lê um arquivo de texto e imprimi seu conteúdo na tela.
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -951,14 +789,14 @@ void main(){
     FILE *arq;
     char linha[100];
     char *result;
-    int i;
+    int i = 1;
 
     arq = fopen("abacate.txt", "rt");
     if (arq == NULL){
     	printf("Problemas em abrir o arquivo");
     	exit(1);
     }
-    i = 1;
+
     while (!feof(arq)){
     	result = fgets(linha,100,arq);
     	if (result){
@@ -972,29 +810,29 @@ void main(){
 ```
 
 ```c
+// Programa que lê uma string e a grava num arquivo de texto.
+
 #include<stdio.h>
 #include<stdlib.h>
 
-//  Programa que lê uma string, grava/salva ela no disco, e depois lê o arquivo
 void main(void){
-FILE \*fp;
-char s[80];
-if((fp=fopen("abacate.txt", "a")) == NULL){
-printf("Arquivo não reconhecido.\n");
-exit(1);
-}
-printf("Escreva uma palavra: ");
-fscanf(stdin, "%s", s); // é a mesma coisa que scanf, porém com strings. Lê do teclado.
-fprintf(fp, "%s", s); //grava/anexa a string "capturada" no arquivo passado para fp.
-fprintf(stdout, "Você anexou '%s' ao arquivo.\n", s);
-fclose(fp);
-//Nesse momento fp não aponta para nenhum arquivo, pois foi fechada a stream com fclose
-if((fp=fopen("abacate.txt", "r")) == NULL){
-printf("Arquivo não pode ser lido.\n");
-exit(1);
-}
-//Aqui o fp já aponta novamente para um arquivo, pois a stream foi aberta dentro do "if"
-fscanf(fp, "%s", s); //ao invés de ler do terminal, lê do proprio arquivo que fp aponta
-fprintf(stdout, "Esse é o arquivo final: '%s'.\n", s); //imprime o conteúdo não no arquivo, mas sim no terminal.
+    FILE \*fp;
+    char s[80];
+
+    if((fp=fopen("abacate.txt", "a")) == NULL){
+        printf("Arquivo não reconhecido.\n");
+        exit(1);
+    }
+
+    printf("Escreva uma palavra: ");
+    fscanf(stdin, "%s", s); // parecido com scanf, mas lê strings.
+    fprintf(fp, "%s", s); //"printa" a string no arquivo (grava na memória).
+    fprintf(stdout, "Você anexou '%s' ao arquivo.\n", s); //printa a string no console.
+    fclose(fp);
+
 }
 ```
+
+## Conclusão
+
+É basicamente isso. Como já deu para perceber essas anotações são mais voltadas para a sintaxe da linguagem doq principios de programação ou algo do tipo. Aprender C é a base para aprender C++. Além disso, do jeito q minhas anotações estão estruturadas, saber C é necessário para entender as anotações sobre data structs (necessário saber a sintaxe).
