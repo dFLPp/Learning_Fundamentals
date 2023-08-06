@@ -1,0 +1,593 @@
+
+
+##doubly linked list com quase todas as funções importantes:
+	
+
+##
+
+## Revertendo uma string em C++ Com stacks
+
+//nesse exemplo não vamos criar uma stack do zero.
+//Poderiamos fazer isso em C++ usando classes e outras coisas, mas nesse exemplo vamos usar o STL.
+//STL é uma biblioteca/conjunto de bibliotecas do C++ que ja tem data structs prontas.
+//Repare também que nosso Big O tanto de espaço quanto de tempo é O(n), e como o big O deve ser O(1) (pois involve stacks) esse código é "ruim"
+#include <iostream>
+#include<stack>
+#include<cstring>
+using namespace std;
+
+void reversing(char* C, int len){
+    //Criando uma "stack" pre-pronta
+    //As funções caracteristicas da stack também já vem prontas (push, top, pop)
+    stack<char> S;
+    for(int i = 0; i < len; i++){
+        S.push(C[i]);
+    }
+    for(int i = 0; i < len; i++){
+        C[i] = S.top();
+        S.pop();
+    }
+}
+
+int main(){
+    char str[50];
+    cout << "String: ";
+    fgets(str, 49, stdin);
+    reversing(str, strlen(str));
+    cout << "Reverse string: " << str << endl;
+    
+    return 0;
+}
+
+##
+
+
+##Função que reverte linked list com Stacks
+
+#include <iostream>
+#include<stack>
+using namespace std;
+
+void reverse(){
+    if(head == NULL) return;
+    //criando a stack e colocando os nodes nela
+    stack<struct node*> S;
+    node* temp = head;
+    while(temp != NULL){
+        S.push(temp);
+        temp = temp->next;
+    }
+    // Redefindo o começo da lista
+    temp = S.top();
+    head = temp;
+    S.pop();
+    
+    //Reorganizando a lista
+    while(!S.empty()){
+        temp->next = S.top();
+        S.pop();
+        temp = temp->next;
+    }
+    temp->next = NULL;
+    
+}
+
+##
+
+## Aplicação bruta/não refinada de queues com arrays:
+
+#include <iostream>
+#define SIZE 50
+using namespace std;
+
+int A[SIZE], head = -1, tail = -1;
+
+int isEmpty(){
+    if(tail == -1 && head == -1){
+        return 0;
+    }else{
+        return 1;
+    }
+}
+
+void enqueue(int x){
+    if((tail+1) % SIZE == head){
+        cout << "Queue is full.\n";
+        return;
+    }else if(isEmpty() == 0){
+        tail++;
+        head++;
+        A[tail] = x;
+        return;
+    }else{
+        tail = (tail+1)%SIZE;
+        A[tail] = x;
+        return;
+    }
+}
+
+void dequeue(){
+    if(isEmpty() == 0){
+        cout << "Queue is alredy empty.\n";
+        return;
+    }else if(head == tail){
+        tail = -1;
+        head = -1;
+    }else{
+        head = (head+1)%SIZE;
+    }
+}
+
+void front(){
+    cout << "Element in head is: " << A[head] << "\n";
+}
+
+void rear(){
+    cout << "Element in tail is: " << A[tail] << "\n";
+}
+
+int main(){
+    enqueue(2);
+    front();
+    rear();
+    enqueue(3);
+    front();
+    rear();
+    enqueue(0);
+    front();
+    rear();
+    dequeue();
+    front();
+    rear();
+    return 0;
+}
+
+## BST e funções uteis/didáticas
+
+    #include <iostream>
+    #include<queue>
+	using namespace std;
+
+	struct BSTnode{
+	    int data;
+	    BSTnode* leftChild;
+	    BSTnode* rightChild;
+	};
+
+	/*
+	Poderiamos fazer: node* root = NULL; (root é global)
+	Dessa forma não precisariamos passar ele nas funções.
+	*/
+
+	BSTnode* createNode(int x){
+	    BSTnode* temp = new BSTnode();
+	    temp->data = x;
+	    temp->leftChild = temp->rightChild = NULL;
+	    return temp;
+	 }
+
+	BSTnode* insert(BSTnode* rootPointer, int x){
+	    if(rootPointer == NULL){
+		rootPointer = createNode(x);
+	    }
+	    else if(x <= rootPointer->data){
+		rootPointer->leftChild = insert(rootPointer->leftChild, x);
+	    }
+	    else{
+		rootPointer->rightChild = insert(rootPointer->rightChild, x);
+	    }
+	    return rootPointer;
+	}
+	
+	//funções para achar min e max
+	BSTnode* searchMin(BSTnode* rootPointer){
+	    while(rootPointer->leftChild != NULL){
+	        rootPointer = rootPointer->leftChild;
+	    }
+	    return rootPointer;
+	}
+	
+	int searchMax(BSTnode* rootPointer){
+	    while(rootPointer->rightChild != NULL){
+	        rootPointer = rootPointer->rightChild;
+	    }
+	    return rootPointer->data;
+	}
+	
+	//função para achar a Height
+	int max(int a, int b){
+	    if(a > b) return a;
+	    else return b;
+	}
+	
+	int findHeight(BSTnode* rootPointer){
+	    if(rootPointer == NULL){
+	        return -1;
+	    }
+	    return max(findHeight(rootPointer->leftChild), findHeight(rootPointer->rightChild)) + 1;
+	}
+
+    //função que itera em Level-order
+    void levelOrder(BSTnode* rootPointer){
+        if(rootPointer == NULL) return;
+        queue<BSTnode*> Q;
+        Q.push(rootPointer);
+        while(!Q.empty()){
+            BSTnode* current = Q.front();
+            cout << current->data << " ";
+            if(current->leftChild != NULL) Q.push(current->leftChild);
+            if(current->rightChild != NULL) Q.push(current->rightChild);
+            Q.pop();
+        }
+        cout << "\n";
+    }
+    
+    //função que itera em preOrder
+    void preOrder(BSTnode* rootPointer){
+        if(rootPointer == NULL) return;
+        cout << rootPointer->data << " ";
+        preOrder(rootPointer->leftChild);
+        preOrder(rootPointer->rightChild);
+    }
+    //função que itera em inOrder
+    void inOrder(BSTnode* rootPointer){
+        if(rootPointer == NULL) return;
+        inOrder(rootPointer->leftChild);
+        cout << rootPointer->data << " ";
+        inOrder(rootPointer->rightChild);
+    }
+    //função que itera em postOrder
+    void postOrder(BSTnode* rootPointer){
+        if(rootPointer == NULL) return;
+        postOrder(rootPointer->leftChild);
+        postOrder(rootPointer->rightChild);
+        cout << rootPointer->data << " ";
+    }
+    
+    //função para saber se a Binary tree é BST
+    bool isBST(BSTnode* rootPointer, int maxValue, int minValue){
+        if(rootPointer == NULL) return true;
+        else if(rootPointer->data > minValue &&
+                rootPointer->data < maxValue &&
+                isBST(rootPointer->leftChild, rootPointer->data, minValue) &&
+                isBST(rootPointer->rightChild, maxValue, rootPointer->data)) return true;
+        else return false;
+    }
+    
+    struct BSTnode* Delete(struct BSTnode *root, int data) {
+    	if(root == NULL) return root;
+    	//iterando recursivamente até chegar no node que queremos deletar
+    	else if(data < root->data) root->leftChild = Delete(root->leftChild,data);
+    	else if (data > root->data) root->rightChild = Delete(root->rightChild,data);
+    	else { //chegamos no node que queremos deletar
+    	    
+    		// Case 1:  No child
+    		if(root->leftChild == NULL && root->rightChild == NULL){ 
+    			delete root;
+    			root = NULL;
+    		}
+    		//Case 2: One child 
+    		else if(root->leftChild == NULL){
+    			struct BSTnode *temp = root;
+    			root = root->rightChild;
+    			delete temp;
+    		}
+    		else if(root->rightChild == NULL) {
+    			struct BSTnode *temp = root;
+    			root = root->leftChild;
+    			delete temp;
+    		}
+    		// case 3: 2 children
+    		else { 
+    			struct BSTnode *temp = searchMin(root->rightChild);
+    			root->data = temp->data;
+    			root->rightChild = Delete(root->rightChild,temp->data);
+    		}
+    	}
+    	return root;
+    }
+
+    
+	int main(){
+	    //criando a tree vazia
+	    BSTnode* rootPointer = NULL;
+	    
+	    //inserindo nodes
+	    rootPointer = insert(rootPointer, 12);  rootPointer = insert(rootPointer, 5);
+	    rootPointer = insert(rootPointer, 15);  rootPointer = insert(rootPointer, 3);
+	    rootPointer = insert(rootPointer, 7);   rootPointer = insert(rootPointer, 13);
+	    rootPointer = insert(rootPointer, 17);   rootPointer = insert(rootPointer, 1);
+	    rootPointer = insert(rootPointer, 9);
+	    
+	    //testando
+	    cout << "O menor número eh: " << searchMin(rootPointer)->data << endl;
+	    cout << "O maior número eh: " << searchMax(rootPointer) << endl;
+	    cout << "A Height da tree eh: " << findHeight(rootPointer) << endl;
+	    ////////////////////////////////
+	    cout << "Level order: "; levelOrder(rootPointer);
+	    cout << "preOrder: "; preOrder(rootPointer); cout << "\n";
+	    cout << "inOrder: "; inOrder(rootPointer); cout << "\n"; 
+	    cout << "postOrder: "; postOrder(rootPointer); cout << "\n";
+	    cout << "É uma BST? ... "; isBST(rootPointer, 2147483647, -2147483648) == true ? cout << "Sim!!!" : cout << "Não...";
+	    
+	    /* -------------------------------------------- */
+	    cout << "\n\nDeletando número 15 e 11..."<< endl;
+	    rootPointer = Delete(rootPointer, 15);
+	    rootPointer = insert(rootPointer, 23);
+	    
+	    cout << "\nInserindo número 6 e 7... \n"<< endl;
+	    rootPointer = insert(rootPointer, 6);
+	    rootPointer = Delete(rootPointer, 8);
+	    /* -------------------------------------------- */
+	    
+	    cout << "O menor número eh: " << searchMin(rootPointer)->data << endl;
+	    cout << "O maior número eh: " << searchMax(rootPointer) << endl;
+	    cout << "A Height da tree eh: " << findHeight(rootPointer) << endl;
+	    ////////////////////////////////
+	    cout << "Level order: "; levelOrder(rootPointer);
+	    cout << "preOrder: "; preOrder(rootPointer); cout << "\n";
+	    cout << "inOrder: "; inOrder(rootPointer); cout << "\n"; 
+	    cout << "postOrder: "; postOrder(rootPointer); cout << "\n";
+	    cout << "É uma BST? ... "; isBST(rootPointer, 2147483647, -2147483648) == true ? cout << "Sim!!!" : cout << "Não...";
+	    
+	    return 0;
+	}
+
+##
+
+##Algoritimo que itera por um graph -- Em Java (você consegue deduzir/entender anyway)
+
+import java.util.*;  
+  
+class DFSTraversal {  
+  private LinkedList<Integer> adj[]; /*adjacency list representation*/  
+  private boolean visited[];  
+  
+  /* Creation of the graph */  
+  DFSTraversal(int V) /*'V' is the number of vertices in the graph*/  
+  {  
+    adj = new LinkedList[V];  
+    visited = new boolean[V];  
+  
+    for (int i = 0; i < V; i++)  
+      adj[i] = new LinkedList<Integer>();  
+  }  
+  
+  /* Adding an edge to the graph */  
+  void insertEdge(int src, int dest) {  
+    adj[src].add(dest);  
+  }  
+  
+  void DFS(int vertex) {  
+    visited[vertex] = true; /*Mark the current node as visited*/  
+    System.out.print(vertex + " ");  
+  
+    Iterator<Integer> it = adj[vertex].listIterator();  
+    while (it.hasNext()) {  
+      int n = it.next();  
+      if (!visited[n])  
+        DFS(n);  
+    }  
+  }  
+  
+  public static void main(String args[]) {  
+    DFSTraversal graph = new DFSTraversal(8);  
+  
+        graph.insertEdge(0, 1);    
+        graph.insertEdge(0, 2);    
+        graph.insertEdge(0, 3);    
+        graph.insertEdge(1, 3);    
+        graph.insertEdge(2, 4);  
+        graph.insertEdge(3, 5);       
+        graph.insertEdge(3, 6);    
+        graph.insertEdge(4, 7);    
+        graph.insertEdge(4, 5);    
+        graph.insertEdge(5, 2);    
+          
+        System.out.println("Depth First Traversal for the graph is:");    
+        graph.DFS(0);    
+  }  
+}
+
+##
+
+## Exemplo de uma Trie:
+
+#include <stdio.h>  
+#include <stdlib.h>  
+#include <string.h>  
+#define N 26  
+   
+typedef struct TrieNode TrieNode;  
+   
+struct TrieNode{  
+    char info;   
+    TrieNode* child[N];  
+    int data;  
+};  
+   
+TrieNode* trie_make(char info) {  
+    TrieNode* node = (TrieNode*) calloc (1, sizeof(TrieNode));  
+    for (int i = 0; i < N; i++)  
+        node->child[i] = NULL;  
+    node->data = 0;  
+    node->info = info;  
+    return node;  
+}  
+   
+void free_trienode(TrieNode* node) {  
+    for(int i = 0; i < N; i++) {  
+        if (node->child[i] != NULL) {  
+            free_trienode(node->child[i]);  
+        }  
+        else {  
+            continue;  
+        }  
+    }  
+    free(node);  
+}  
+   
+// Trie node loop start  
+TrieNode* trie_insert(TrieNode* flag, char* word) {  
+    TrieNode* temp = flag;  
+     for (int i = 0; word[i] != '\0'; i++) {  
+       int idx = (int) word[i] - 'a';  
+        if (temp->child[idx] == NULL) {  
+            temp->child[idx] = trie_make(word[i]);  
+        }  
+        else {  
+        }  
+        temp = temp->child[idx];  
+    }trie  
+    temp->data = 1;  
+    return flag;  
+}  
+   
+int search_trie(TrieNode* flag, char* word)  
+{  
+    TrieNode* temp = flag;  
+   
+    for(int i = 0; word[i] != '\0'; i++)  
+    {  
+        int position = word[i] - 'a';  
+        if (temp->child[position] == NULL)  
+            return 0;  
+        temp = temp  child[position];  
+    }  
+    if (temp != NULL && temp -> data == 1)  
+        return 1;  
+    return 0;  
+}  
+   
+int check_divergence(TrieNode* flag, char* word) {  
+    TrieNode* temp = flag;  
+    int len = strlen(word);  
+    if (len == 0)  
+        return 0;  
+    int last_index = 0;  
+    for (int i = 0; i < len; i++) {  
+        int position = word[i] - 'a';  
+        if (temp -> child[position]) {  
+            for (int j = 0; j < N; j++) {  
+                if (j != position && temp -> child[j]) {  
+                    last_index = i + 1;  
+                    break;  
+                }  
+            }  
+            temp = temp -> child[position];  
+        }  
+    }  
+    return last_index;  
+}  
+   
+char* find_longest_prefix(TrieNode* flag, char* word) {  
+    if (!word || word[0] == '\0')  
+        return NULL;  
+    int len = strlen(word);  
+  
+    char* longest_prefix = (char*) calloc (len + 1, sizeof(char));  
+    for (int i = 0; word[i] != '\0'; i++)  
+        longest_prefix[i] = word[i];  
+    longest_prefix[len] = '\0';  
+   
+    int branch_idx  = check_divergence(flag, longest_prefix) - 1;  
+    if (branch_idx >= 0) {  
+        longest_prefix[branch_idx] = '\0';  
+        longest_prefix = (char*) realloc (longest_prefix, (branch_idx + 1) * sizeof(char));  
+    }  
+   
+    return longest_prefix;  
+}  
+   
+int data_node(TrieNode* flag, char* word) {  
+    TrieNode* temp = flag;  
+    for (int i = 0; word[i]; i++) {  
+        int position = (int) word[i] - 'a';  
+        if (temp -> child[position]) {  
+            temp = temp -> child[position];  
+        }  
+    }  
+    return temp -> data;  
+}  
+   
+TrieNode* trie_delete(TrieNode* flag, char* word) {  
+    if (!flag)  
+        return NULL;  
+    if (!word || word[0] == '\0')  
+        return flag;  
+    if (!data_node(flag, word)) {  
+        return flag;  
+    }  
+    TrieNode* temp = flag;  
+    char* longest_prefix = find_longest_prefix(flag, word);  
+    if (longest_prefix[0] == '\0') {  
+        free(longest_prefix);  
+        return flag;  
+    }  
+    int i;  
+    for (i = 0; longest_prefix[i] != '\0'; i++) {  
+        int position = (int) longest_prefix[i] - 'a';  
+        if (temp -> child[position] != NULL) {  
+            temp = temp -> child[position];  
+        }  
+        else {  
+            free(longest_prefix);  
+            return flag;  
+        }  
+    }  
+    int len = strlen(word);  
+    for (; i < len; i++) {  
+        int position = (int) word[i] - 'a';  
+        if (temp -> child[position]) {  
+            TrieNode* rm_node = temp->child[position];  
+            temp -> child[position] = NULL;  
+            free_trienode(rm_node);  
+        }  
+    }  
+    free(longest_prefix);  
+    return flag;  
+}  
+   
+void print_trie(TrieNode* flag) {  
+    if (!flag)  
+        return;  
+    TrieNode* temp = flag;  
+    printf("%c → ", temp->info);  
+    for (int i = 0; i < N; i++) {  
+        print_trie(temp -> child[i]);   
+    }  
+}  
+   
+void search(TrieNode* flag, char* word) {  
+    printf("Search the word %s: ", word);  
+    if (search_trie(flag, word) == 0)  
+        printf("Not Found\n");  
+    else  
+        printf("Found!\n");  
+}  
+   
+int main() {  
+    TrieNode* flag = trie_make('\0');  
+    flag = trie_insert(flag, "oh");  
+    flag = trie_insert(flag, "way");  
+    flag = trie_insert(flag, "bag");  
+    flag = trie_insert(flag, "can");  
+    search(flag, "ohh");  
+    search(flag, "bag");  
+    search(flag, "can");  
+    search(flag, "ways");  
+    search(flag, "way");  
+    print_trie(flag);  
+    printf("\n");  
+    flag = trie_delete(flag, "oh");  
+    printf("deleting the word 'hello'...\n");  
+    print_trie(flag);  
+    printf("\n");  
+    flag = trie_delete(flag, "can");  
+    printf("deleting the word 'can'...\n");  
+    print_trie(flag);  
+    printf("\n");  
+    free_trienode(flag);  
+    return 0;  
+}
+##
