@@ -1,31 +1,42 @@
-# Linked Lists
+# Linked Lists (Listas Encadeadas):
 
-## Definição
+Uma linked list é uma estrutura de dados linear composta por elementos chamados de "nós". Cada nó contém um valor e um ponteiro (ou referência) para o próximo nó na sequência. O último nó da lista aponta para null, indicando o final da lista.
 
-Uma linked list é uma estrutura de armazenamento de dados que se parece com arrays porém não tem tamanho fixo e os items não ficam aramzenados em um espaço contiguo de memória. Devido a essa forma de armazenar os dados os elementos do final da lista só podem ser acessados através de outros elementos, ou seja, você não acesso direto a eles, de modo que se você perder o "caminho" que leva até esse elemento, você o perdeu.
+## Tipos:
 
-A caractéristica dessa estrutura de dados é que ela composta por dois componentes: o dado que se quer armazenar e um ponteiro para o próximo elemento da sequência. Cada elemento da lista é chamado de _node_ e pode armazenar qualquer tipo de dado (até mesmo outras linked lists).
+Existem diferentes tipos de linked lists, cada um com suas próprias características e usos:
 
-As principais funcionalidades que uma linked list tem são:
+### Singly Linked List (Lista Encadeada Simples):
 
-- inserção: quando feita no início da lista tem O(1) e em qualquer outro lugar O(n);
-- recuperação: Diferente de arrays que tem O(1), para todos os casos a linked list tem O(n);
-- exclusão: linked lists demoram O(n) mas o fazem de com complexidade de espaço constante ao mesmo em que re-organizam a sequecia, diferente de arrays que, se o faz, precisa de outra variável com no mínimo o mesmo tamanho da array atual.
+- Cada nó possui um valor e um ponteiro para o próximo nó.
+- Acesso direto ao elemento anterior não é eficiente, pois a iteração é feita de forma linear.
+- Inserções e remoções na frente da lista são eficientes (O(1)), mas inserções/remoções no meio exigem busca (O(n)).
 
-## Tipos
+### Doubly Linked List (Lista Encadeada Dupla):
 
-Existem vários tipos de linked lists. Entre as principais temos:
+- Cada nó possui um valor, um ponteiro para o próximo nó e um ponteiro para o nó anterior.
+- Permite iteração em ambas as direções (frente e trás).
+- Inserções e remoções no meio são mais eficientes (O(1)) em comparação com singly linked lists.
 
-- Singly linked list: Cada elemento guarda o endereço de memória do elemento que vem depois de si na sequência. Para denotar o início da lista cria-se a variável **head** que sempre fica no início da lista (sem esssa variável todos os outros participantes da lista ficariam "soltos" na memória, pois a única forma de chegar até eles é através do elemento que vem antes.). Nas anotações vamos implementa com `Javascript`.
+### Circular Linked List (Lista Encadeada Circular):
 
-- Doubly linked list: Cada elemento guarda o endereço de memória tanto do elemento que vem antes quando do elemento que vem depois de si. Além do **head** também é criada por conveniência a variável **tail** que sempre fica no final da lista. Dessa forma você pode percorrer a lista em ambas as direções com mais facilidade. Nas anotações vamos implementa com `C`.
+- Similar à singly/doubly linked list, mas o último nó aponta de volta ao primeiro nó (ou ao primeiro nó com um doubly linked list circular).
+- Útil quando a lista precisa ser percorrida em um loop contínuo.
 
-- Circular linked list: É linked list onde o elemento do final (tail) está ligado ao elemento do início (head) da lista. Linked lists circulares podem ser tanto Singly quando doubly. Nas anotações vamos implementa com `python`.
+## Implementação:
 
-- Skip list: Nas anotações vamos implementa com `Java`.
+As linked lists podem ser implementadas de várias maneiras, mas a abordagem comum envolve a criação de classes para representar os nós e a lista em si. Em linguagens de programação, você pode usar classes, estruturas ou registros para criar essa estrutura. As operações principais incluem inserção, remoção e busca.
 
-## Implementação
+No entanto, lembre-se de que as linked lists têm desvantagens em comparação com outras estruturas de dados, como arrays dinâmicos (vectors) ou arrays estáticos. As linked lists têm um overhead de memória maior devido aos ponteiros adicionais e podem ter um desempenho pior em termos de acesso aleatório aos elementos.
 
-Existem duas formas básicas: usando arrays e usando objetos. A implementação usando objetos varia de linguagem para linguagem. Por exemplo, em C usamos o conceito de structs e alocação "manual" de memória enquanto que no javascript usamos classes e constructors.
+## Comparação:
 
-A implementação usando arrays consiste emarmazenar os elementos em espaços contiguos na memória. Já a implementação usando objetos consiste em criar espaços em locais "aleatórios" da memória e integra-los/interliga-los através do enderço de memória que eles tem para o próximo elemento. Aqui vamos usar a implementação usando objetos.
+| Operação          | Linked List                    | Array (Dynamic)                | Array (Static)       |
+| ----------------- | ------------------------------ | ------------------------------ | -------------------- |
+| Acesso (índice)   | O(n) - Busca linear            | O(1) - Acesso direto           | O(1) - Acesso direto |
+| Inserção (início) | O(1) - Inserção direta         | Amortizado O(n) - Deslocamento | N/A - Tamanho fixo   |
+| Inserção (meio)   | O(n) - Busca + Inserção        | Amortizado O(n) - Deslocamento | N/A - Tamanho fixo   |
+| Inserção (fim)    | O(n) - Busca linear + Inserção | Amortizado O(1) - Adição       | N/A - Tamanho fixo   |
+| Remoção (início)  | O(1) - Remoção direta          | O(n) - Deslocamento            | N/A - Tamanho fixo   |
+| Remoção (meio)    | O(n) - Busca + Remoção         | O(n) - Deslocamento            | N/A - Tamanho fixo   |
+| Remoção (fim)     | O(n) - Busca linear + Remoção  | O(1) - Remoção direta          | N/A - Tamanho fixo   |

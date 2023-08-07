@@ -1,71 +1,99 @@
 # Singly circular linked list
 
-class Node():
-    def __init__(self, data: type) -> None:
-        self.data = data;
-        self.next = None;
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
 
-    def __repr__(self) -> str:
-        return str(self.data);
-
-class LinkedList():
-    def __init__(self) -> None:
-        self.head = None;
-        self.size = 0;
-
-    def __createNode(self, data: type) -> Node:
-        return Node(data);
+    def __repr__(self):
+        return str(self.data)
 
 
-    def addAt(self, data: type, position: int = None) -> None:
+class SCLL:
+    def __init__(self):
+        self.head = None
+        self.size = 0
+
+    def add(self, data, position=None):
         if position is None:
-            position = self.size;
+            position = self.size + 1
 
-        if position <= 0 or position - self.size > 1:
-            print("Posição inválida");
+        if position <= 0 or position > self.size + 1:
+            print("Posição inválida")
             return
 
-        node = self.__createNode(data);
-        node.next = self.head;
+        new_node = Node(data)
 
         if self.head is None:
-            self.head = node;
+            self.head = new_node
+            self.head.next = self.head
         else:
-            temp = self.head;
-            for _ in range(position):
-                temp = temp.next;
-            temp.next = node;
+            if position == 1:
+                new_node.next = self.head
+                temp = self.head
+                while temp.next != self.head:
+                    temp = temp.next
+                temp.next = new_node
+                self.head = new_node
+            else:
+                temp = self.head
+                for _ in range(position - 2):
+                    temp = temp.next
+                new_node.next = temp.next
+                temp.next = new_node
 
+        self.size += 1
 
-        self.size += 1;
-
-    def removeAt(self, position: int) -> None:
-        t1 = self.head;
-        t2 = t1;
-
+    def remove_at(self, position):
         if position > self.size or position <= 0:
-            print("Posição inválida");
-            return;
+            print("Posição inválida")
+            return
 
-        for _ in range(position):
-            t2 = t1;
-            t1 = t1.next;
-        
-        t2.next = t1.next;
+        if position == 1:
+            if self.size == 1:
+                self.head = None
+            else:
+                temp = self.head
+                while temp.next != self.head:
+                    temp = temp.next
+                temp.next = self.head.next
+                self.head = self.head.next
+        else:
+            curr = self.head
+            prev = curr
 
-    def __repr__(self) -> str:
-        items = [];
-        temp = self.head;
-        
-        while temp is not None:
-            items.append(str(temp.data));
-            temp = temp.next;
-            
-        return " -> ".join(items);
-        
-        
-ll = LinkedList();
-ll.addAt('a');
-ll.addAt(3);
+            for _ in range(position - 1):
+                prev = curr
+                curr = curr.next
 
-print(ll);
+            prev.next = curr.next
+
+        self.size -= 1
+
+    def __repr__(self):
+        items = []
+        temp = self.head
+
+        while True:
+            items.append(str(temp.data))
+            temp = temp.next
+
+            if temp == self.head:
+                break
+
+        return " -> ".join(items)
+
+
+ll = SCLL()
+ll.add('a')
+ll.add(3)
+ll.add(-1)
+ll.add(5)
+ll.add('b', 1)
+print(ll)
+
+ll.remove_at(1)
+ll.remove_at(-1)
+ll.remove_at(5)
+
+print(ll)
