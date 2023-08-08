@@ -1,10 +1,4 @@
-/*
-É possivel fazer de várias maneiras, mas existem 2 em especial:
-1. usando uma array com tamanho const (#define) para armazenar os items
-2. usando pointers e um tamanho dinâmico dado pelo usar
-
-Como eu quero mostrar virtude (e falhar miseravelmente com um código ruim) vou com a segunda opção
-*/
+// Stack com array
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,16 +21,16 @@ void init_stack(Stack *stk, int size)
     {
         stk->nItems = 0;
         stk->size = size;
-        stk->items = calloc(stk->size, sizeof(Item *));
-        // Acho q faz mais sentido faz n blocos de tamanho x ao invés de um blocão de n*x
+        stk->items = malloc(size * sizeof(Item));
     }
-    return;
 }
 
 void stack_push(Stack *stk, Item item)
 {
     if (stk->nItems >= stk->size)
+    {
         return;
+    }
     else
     {
         stk->items[stk->nItems] = item;
@@ -48,30 +42,34 @@ Item stack_pop(Stack *stk)
 {
     if (stk->nItems > 0)
     {
-        stk->items[stk->nItems].isDeleted = 1; // true
         stk->nItems -= 1;
+        stk->items[stk->nItems].isDeleted = 1; // true
         return stk->items[stk->nItems];
-        // do jeito q eu aloquei acho q não tem como fazer o free(stk->items[stk->nItems])
     }
     else
-        return;
+    {
+        Item empty_item = {.isDeleted = 0, .value = 0}; // Criando um item vazio para retornar em caso de pilha vazia
+        return empty_item;
+    }
 }
 
 Item stack_peek(Stack *stk)
 {
-    return stk->items[stk->nItems];
+    if (stk->nItems > 0)
+    {
+        return stk->items[stk->nItems - 1];
+    }
+    else
+    {
+        Item empty_item = {.isDeleted = 0, .value = 0};
+        return empty_item;
+    }
 }
 
 Item createItem(int value)
 {
-    Item i = (Item){
-        .value = value,
-        .isDeleted = 0,
-
-    };
+    Item i = {.value = value, .isDeleted = 0};
     return i;
-
-    // A ideia de criar uma struct e uma função pra Item é que ele pode ser qualquer coisa
 }
 
 void addToStack(Stack *stk)
@@ -79,28 +77,50 @@ void addToStack(Stack *stk)
     int i = -1;
     printf("Valor: ");
     scanf("%d", &i);
-    stack_push(&stk, createItem(i));
+    stack_push(stk, createItem(i)); // Corrigido para passar o ponteiro para a pilha
 }
 
 void removeFromStack(Stack *stk)
 {
-    Item top = stack_pop(&stk);
-    printf("value: %d\n", top.value);
-};
+    Item top = stack_pop(stk);
+    if (top.isDeleted == 0)
+    {
+        printf("value: %d\n", top.value);
+    }
+    else
+    {
+        printf("A pilha está vazia.\n");
+    }
+}
 
 void printPeek(Stack *stk)
 {
-    printf("Top element: %d\n", stk->items[stk->nItems].value);
-};
+    Item top = stack_peek(stk);
+    if (top.isDeleted == 0)
+    {
+        printf("Top element: %d\n", top.value);
+    }
+    else
+    {
+        printf("A pilha está vazia.\n");
+    }
+}
 
 void printStack(Stack *stk)
 {
     if (stk->nItems == 0)
-        return;
-    for (int i = 0; i < stk->nItems; i++)
     {
-        if (stk->items[i].isDeleted == 0)
-            printf("Elem %d: %d\n", i, stk->items[i]);
+        printf("A pilha está vazia.\n");
+    }
+    else
+    {
+        for (int i = 0; i < stk->nItems; i++)
+        {
+            if (stk->items[i].isDeleted == 0)
+            {
+                printf("Elem %d: %d\n", i, stk->items[i].value);
+            }
+        }
     }
 }
 
@@ -123,32 +143,29 @@ void eventLoop(Stack *stk)
         switch (i)
         {
         case 1:
-            addToStack(&stk);
-            goto teleport;
+            addToStack(stk);
+            break;
 
         case 2:
-            removeFromStack(&stk);
-            goto teleport;
+            removeFromStack(stk);
+            break;
 
         case 3:
-            printPeek(&stk);
-            goto teleport;
+            printPeek(stk);
+            break;
 
         case 4:
-            printStack(&stk);
-            goto teleport;
+            printStack(stk);
+            break;
 
         case 5:
-            goto Kawarimi;
+            return;
 
         default:
+            printf("Opção inválida. Tente novamente.\n");
             break;
         }
-    teleport:
     }
-
-Kawarimi:
-    return;
 }
 
 int main()
@@ -161,5 +178,6 @@ int main()
     init_stack(&s1, v);
     eventLoop(&s1);
 
+    free(s1.items);
     return 0;
 }

@@ -40,3 +40,29 @@ No entanto, lembre-se de que as linked lists têm desvantagens em comparação c
 | Remoção (início)  | O(1) - Remoção direta          | O(n) - Deslocamento            | N/A - Tamanho fixo   |
 | Remoção (meio)    | O(n) - Busca + Remoção         | O(n) - Deslocamento            | N/A - Tamanho fixo   |
 | Remoção (fim)     | O(n) - Busca linear + Remoção  | O(1) - Remoção direta          | N/A - Tamanho fixo   |
+
+## Skip list:
+
+Uma Skip List é uma estrutura de dados probabilística que permite busca, inserção e remoção eficientes em uma coleção ordenada de elementos. Ela foi projetada para combinar a simplicidade das linked lists com a eficiência de estruturas de dados de árvores balanceadas, como árvores AVL.
+
+A ideia por trás da Skip List é adicionar uma dimensão adicional à lista, permitindo "pulos" entre os elementos em várias camadas (níveis) da estrutura. Cada elemento em uma Skip List é chamado de "nó", e cada nó pode ter vários ponteiros para outros nós em níveis superiores. A camada superior é a camada que possui o menor número de elementos, enquanto a camada inferior é a camada que contém todos os elementos.
+
+A estrutura de camadas permite realizar buscas, inserções e remoções de forma mais eficiente, pois você pode pular por várias posições de uma vez em vez de percorrer elemento por elemento, como em uma lista ligada tradicional.
+
+### Características:
+
+#### Elementos com Múltiplos Níveis:
+
+Cada nó possui um ponteiro para um nó no mesmo nível à direita e um ponteiro para um nó no próximo nível acima. Isso permite a navegação eficiente entre os níveis e ajuda a reduzir o tempo de busca.
+
+#### Inserção:
+
+Para inserir um elemento, você cria um novo nó e, em seguida, decide aleatoriamente a que níveis ele deve ser promovido. Quanto mais alto o nível, mais raro é que um nó seja promovido a esse nível. Isso mantém o balanceamento da Skip List.
+
+#### Remoção:
+
+Para remover um elemento, você simplesmente remove seus ponteiros de todos os níveis. Se os níveis superiores ficarem sem nós, você reduz o nível da estrutura.
+
+#### Busca:
+
+A busca começa no nível superior e progride para o nível inferior, até que você encontre o elemento desejado ou alcance o final da lista.
