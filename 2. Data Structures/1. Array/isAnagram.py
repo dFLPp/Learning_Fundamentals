@@ -1,5 +1,4 @@
-# Anagrama de uma palavra com arrays
-# Anagrama e
+# Anagrama de uma palavra
 
 def is_anagram(str1, str2):
     str1 = str1.replace(" ", "").lower()
@@ -8,13 +7,15 @@ def is_anagram(str1, str2):
     if len(str1) != len(str2):
         return False
 
-    char_count = [0] * 26  # Um array para contar as ocorrências de cada caractere
+    char_count = [0] * 26  # Cada posição representa uma letra do alfabeto
 
     for char in str1:
-        char_count[ord(char) - ord('a')] += 1
+        if 'a' <= char <= 'z':  # lidando com caract especiais
+            char_count[ord(char) - ord('a')] += 1 # decidindo qual a posição com base no valor unicode
 
     for char in str2:
-        char_count[ord(char) - ord('a')] -= 1
+        if 'a' <= char <= 'z':
+            char_count[ord(char) - ord('a')] -= 1
 
     for count in char_count:
         if count != 0:
