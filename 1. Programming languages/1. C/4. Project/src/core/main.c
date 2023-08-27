@@ -1,4 +1,4 @@
-#include "main.h"
+#include "../../include/core/main.h"
 
 void eventLoop()
 {
@@ -12,9 +12,12 @@ void eventLoop()
         printf("\t4- Salvar\n");
         printf("\t5- Sair\n");
         printf("-> ");
+
+        fflush(stdin);
+
         scanf("%c", &opt);
 
-        if (strcmp(opt, '5') == 0)
+        if (opt == '5')
             exit(1);
     }
 }

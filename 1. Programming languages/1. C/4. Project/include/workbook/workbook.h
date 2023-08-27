@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "task.h"
-#include "tasklist.h"
-#include "consts.h"
+#include "../task/task.h"
+#include "../tasklist/tasklist.h"
+#include "../core/consts.h"
 
 typedef struct WorkBook WorkBook;
 
@@ -14,7 +14,7 @@ struct WorkBook
 {
     Node *head;
     FILE *filePointer;
-} WorkBook;
+};
 
 Boolean mapFromFileToList(Node **head, FILE *filePointer);
 Boolean mapFromListToFile(Node **head, FILE *filePointer);

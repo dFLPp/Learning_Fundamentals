@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "task.h"
+#include "../task/task.h"
 
 typedef struct Node Node;
 

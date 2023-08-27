@@ -6,10 +6,10 @@
 #include <string.h>
 #include <time.h>
 
-#include "id.h"
-#include "task.h"
-#include "tasklist.h"
-#include "workbook.h"
+#include "../id/id.h"
+#include "../task/task.h"
+#include "../tasklist/tasklist.h"
+#include "../workbook/workbook.h"
 #include "consts.h"
 
 void loadTasks();

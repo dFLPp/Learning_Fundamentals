@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "id.h"
-#include "consts.h"
+#include "../id/id.h"
+#include "../core/consts.h"
 
 typedef enum Boolean Boolean;
 
