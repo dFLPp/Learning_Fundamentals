@@ -97,8 +97,10 @@ void eventLoop(WorkBook *workbook)
         if (opt == '1')
         {
             if (createItem(&workbook->head) == FALSE)
+            {
+                system("cls");
                 printf("[DEBUG LOG]: Não foi possivel inserir\n");
-            system("cls");
+            }
         }
 
         else if (opt == '2')
@@ -107,8 +109,10 @@ void eventLoop(WorkBook *workbook)
             fflush(stdin);
             scanf("%s", newId);
             if (deleteItem(&workbook->head, newId) == FALSE)
+            {
+                system("cls");
                 printf("[DEBUG LOG]: Não foi possivel deletar\n");
-            system("cls");
+            }
         }
 
         else if (opt == '3')
@@ -122,14 +126,18 @@ void eventLoop(WorkBook *workbook)
             scanf("%d", newIsDone);
 
             if (modifyItem(&workbook->head, newId, newIsDone) == FALSE)
-                printf("[DEBUG LOG]: Não foi possivel modificar\n");
-            system("cls");
+            {
+                system("cls");
+                printf("[DEBUG LOG]: Nao foi possivel modificar\n");
+            }
         }
         else if (opt == '4')
         {
             if (showTasks(workbook) == FALSE)
-                printf("[DEBUG LOG]: Não foi possivel mostrar\n");
-            system("cls");
+            {
+                system("cls");
+                printf("[DEBUG LOG]: Nao foi possivel mostrar\n");
+            }
         }
         else if (opt == '5')
         {

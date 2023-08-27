@@ -11,6 +11,7 @@ Boolean mapFromFileToList(Node **head, FILE *filePointer)
     if (filePointer == NULL)
         return FALSE;
 
+    // garante que vc sempre começa a ler pelo inicio do arquivo
     rewind(filePointer);
 
     while (fgets(line, sizeof(line), filePointer) != NULL)
@@ -18,11 +19,12 @@ Boolean mapFromFileToList(Node **head, FILE *filePointer)
         if (sscanf(line, "%[^;-;];-;%[^;-;];-;%[^;-;];-;%d", id, title, desc, &isDone) == 4)
         {
             Task task = createTaskFromFile(id, title, desc, isDone);
+            printf("chegou aq");
             insertNode(head, &task);
         }
     }
 
-    return (*head != NULL); // Retornar TRUE se a lista não estiver vazia
+    return TRUE;
 }
 
 Boolean mapFromListToFile(Node **head, FILE *filePointer)
@@ -45,7 +47,7 @@ Boolean mapFromListToFile(Node **head, FILE *filePointer)
     while (curr != NULL)
     {
         gambiarra = (int)curr->object.isDone;
-        snprintf(line, sizeof(line), "%s;-;%s;-;%s;-;%d", curr->object.id, curr->object.title, gambiarra);
+        snprintf(line, sizeof(line), "%s;-;%s;-;%s;-;%d\0", curr->object.id, curr->object.title, gambiarra);
         fprintf(filePointer, "%s\n", line);
         curr = curr->next;
     }
