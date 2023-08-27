@@ -15,10 +15,8 @@ struct Node
     Node *next;
 };
 
-Node *createNode(Task *task);
-
 Boolean insertNode(Node **head, Task *task);
 Boolean removeNode(Node **head, char *id);
-Boolean updateNode(Node *head, char *id, Boolean status);
+Boolean updateNode(Node **head, char *id, Boolean status);
 
 #endif

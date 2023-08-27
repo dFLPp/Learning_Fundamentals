@@ -6,10 +6,8 @@ Neste projeto, você criará um programa em C que permite ao usuário gerenciar 
 
 1. O programa inicia e carrega a lista de tarefas de um arquivo.
 2. Exibe um menu com opções para o usuário.
-3. O usuário escolhe adicionar uma tarefa, insere título e descrição, e a tarefa é adicionada à lista.
-4. O usuário pode escolher exibir a lista de tarefas e ver todas as tarefas pendentes.
-5. O usuário pode marcar tarefas como concluídas e, em seguida, optar por remover as tarefas concluídas.
-6. Ao sair do programa, as alterações são salvas no arquivo.
+3. O usuário pode escolher entre adicionar, remover, editar e mostrar tarefas.
+4. Ao sair do programa, as alterações são salvas no arquivo.
 
 ## Fluxo do Programa (desenvolvedor)
 
@@ -19,20 +17,24 @@ Neste projeto, você criará um programa em C que permite ao usuário gerenciar 
 
 ## Lista de requerimentos
 
-- Struct que serve para representar uma tarefa. Deve conter campos de string para o título (`title`) com tamanho máx de 32 chars, para a descrição (`desc`) com max size de 256 chars, para o campo enum `status` que é 0 ou 1 (flag booleana para saber se está concluida) e um campo `id` para poder fazer modificações e deleção.
+- Struct que serve para representar uma tarefa. Deve conter campos para o título (`title`) com tamanho máx de 32 chars, para a descrição (`desc`) com max size de 256 chars, para o campo enum `status` que é 0 ou 1 (flag booleana para saber se está concluida) e um campo `id` para poder fazer modificações e deleção.
 
-- Linked list com todas as funcionalidades para poder armazenar as tarefas na memória do programa. A adição de tarefas será feito no início da linked list fornencendo O(1). Iteração será O(n) e para deletar/modificar vamos usar o id da struct como parâmetro de procura (poderiamos usar o título como param. mas pode ocorrer de duas tasks terem o msm título).
+- Linked list simplificada para armazenar as tarefas na memória do programa. A adição de tarefas será feita no início da linked list fornencendo O(1). Será O(n) para deletar/modificar, utilzando o id da struct como parâmetro de procura.
 
-- Outra struct que serve para representar o arquivo e mapear o texto do arquivo para objetos e vice-versa. Como estamos usando linked lists ela também vai conter o Head da linked list que representa as tarefas em memória. Cada linha do arquivo vai possuir os 4 campos da struct separado pelo caractere
+- Outra struct que serve para representar o arquivo e mapear o texto do arquivo para objetos e vice-versa. Como estamos usando linked lists ela também vai conter o Head da linked list que representa as tarefas em memória. Cada linha do arquivo vai possuir os 4 campos da struct separados por ";-;"
 
 - Função para gerar ids para cada struct
 
 - [Descartado] Usar uma stacks para salvar o estado da linked list e implementar a funcionalidade undo e redo (fique a vontade para tentar fazer, n é dificil, mas só salvar o head da lista na stack n é o sufuciente)
 
-## Comando usado para executar:
+## Como executar
 
 Mova/abra o terminal no diretório do main.c e execute o comando:
 
-`gcc ./main.c ../id/id.c ../task/task.c ../tasklist/tasklist.c ../workbook/workbook.c -o a`
+`gcc ./main.c ../id/id.c ../task/task.c ../tasklist/tasklist.c ../workbook/workbook.c -o ../../program.exe`
 
-Após isso é só executar "a.exe" que apareceu no msm diretório de main.c
+Após isso é só executar "program.exe" que apareceu no root do programa.
+
+## Limitações
+
+1. O texto escrito em title e desc tem que ser ASCII, ou seja, nada de acentos ou emojis ou etc.

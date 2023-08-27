@@ -32,26 +32,6 @@ Task createTaskFromFile(char *id, char *title, char *desc, Boolean isDone)
     return task;
 }
 
-Boolean setTitle(Task *task, char *title)
-{
-    copyStringWithLimit(task->title, title, sizeof(task->title));
-    return TRUE;
-}
-
-Boolean setDesc(Task *task, char *desc)
-{
-    copyStringWithLimit(task->desc, desc, sizeof(task->desc));
-    return TRUE;
-}
-
-Boolean setStatus(Task *task, Boolean status)
-{
-    if (task->isDone == status)
-        return FALSE;
-    task->isDone = status;
-    return TRUE;
-}
-
 void printTask(Task *task)
 {
     printf("id: %s\n", task->id);

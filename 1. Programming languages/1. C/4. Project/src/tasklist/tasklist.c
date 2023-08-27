@@ -1,6 +1,6 @@
 #include "../../include/tasklist/tasklist.h"
 
-Node *createNode(Task *task)
+static Node *createNode(Task *task)
 {
     if (task != NULL)
     {
@@ -55,9 +55,9 @@ Boolean removeNode(Node **head, char *id)
     return FALSE;
 }
 
-Boolean updateNode(Node *head, char *id, Boolean status)
+Boolean updateNode(Node **head, char *id, Boolean status)
 {
-    Node *curr = head;
+    Node *curr = *head;
 
     while (curr != NULL)
     {

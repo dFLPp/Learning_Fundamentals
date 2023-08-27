@@ -36,14 +36,29 @@ static Boolean deleteItem(Node **head, char *id)
 
 static Boolean modifyItem(Node **head, char *id, Boolean newStatus)
 {
-    if (head == NULL)
-        return FALSE;
-    if (head == NULL)
-        return FALSE;
-    if (newStatus <= 0 && newStatus >= 1)
+    if (head == NULL || *head == NULL)
+        if (newStatus < FALSE || newStatus > TRUE)
+            return FALSE;
+
+    return updateNode(head, id, newStatus);
+}
+
+static Boolean showTasks(WorkBook *workbook)
+{
+    if (workbook->head == NULL)
         return FALSE;
 
-    return updateNode(*head, id, newStatus);
+    Node *curr = workbook->head;
+    int i = 1;
+    while (curr != NULL)
+    {
+        printf("TASK %d\n", i);
+        printTask(&curr->object);
+        printf("\n");
+        curr = curr->next;
+        i++;
+    }
+    return TRUE;
 }
 
 static Boolean saveTasks(WorkBook *workbook)
@@ -54,40 +69,9 @@ static Boolean saveTasks(WorkBook *workbook)
         return mapFromListToFile(&workbook->head, workbook->filePointer);
 }
 
-static Boolean showTasks(WorkBook *workbook)
-{
-    if (workbook->head == NULL)
-        return FALSE;
-    Node *curr = workbook->head;
-    int i = 1;
-    while (curr->next != NULL)
-    {
-        printf("TASK %d\n", i);
-        printTask(&curr->object);
-        printf("\n");
-        curr = curr->next;
-    }
-    printf("TASK %d\n", i);
-    printTask(&curr->object);
-    printf("\n");
-
-    return TRUE;
-}
-
-static Boolean loadTaks(WorkBook *workbook)
-{
-    return mapFromFileToList(&workbook->head, workbook->filePointer);
-}
-
 Boolean setup(WorkBook *workbook)
 {
-    if (!loadTaks(workbook))
-    {
-        workbook->head = NULL;
-        workbook->filePointer = NULL;
-        return FALSE;
-    }
-    return TRUE;
+    return mapFromFileToList(&workbook->head, workbook->filePointer);
 }
 
 void eventLoop(WorkBook *workbook)
@@ -98,7 +82,7 @@ void eventLoop(WorkBook *workbook)
 
     while (TRUE)
     {
-        printf("Task app\n");
+        printf("Task app\n\n");
         printf("1 - Criar\n");
         printf("2 - Remover\n");
         printf("3 - Editar\n");
@@ -110,49 +94,62 @@ void eventLoop(WorkBook *workbook)
 
         scanf(" %c", &opt);
 
-        switch (opt)
+        if (opt == '1')
         {
-        case '1':
-            if (!createItem(&workbook->head))
-                exit(1);
-            break;
+            if (createItem(&workbook->head) == FALSE)
+                printf("[DEBUG LOG]: Não foi possivel inserir\n");
+            system("cls");
+        }
 
-        case '2':
-            printf("Diga qual o id da task: ");
+        else if (opt == '2')
+        {
+            printf("ID: ");
             fflush(stdin);
             scanf("%s", newId);
-            if (!deleteItem(&workbook->head, newId))
-                exit(1);
-            break;
+            if (deleteItem(&workbook->head, newId) == FALSE)
+                printf("[DEBUG LOG]: Não foi possivel deletar\n");
+            system("cls");
+        }
 
-        case '3':
-            printf("Diga qual o id da task: ");
+        else if (opt == '3')
+        {
+            printf("id da task: ");
             fflush(stdin);
             scanf("%s", newId);
 
-            printf("Diga qual o novo status da task: ");
+            printf("novo status: ");
             fflush(stdin);
             scanf("%d", newIsDone);
-            if (!modifyItem(&workbook->head, newId, newIsDone))
-                exit(1);
-            break;
 
-        case '4':
-            if (!showTasks(workbook))
-                exit(1);
-            break;
-
-        case '5':
-            if (saveTasks(workbook))
-                exit(0);
+            if (modifyItem(&workbook->head, newId, newIsDone) == FALSE)
+                printf("[DEBUG LOG]: Não foi possivel modificar\n");
+            system("cls");
+        }
+        else if (opt == '4')
+        {
+            if (showTasks(workbook) == FALSE)
+                printf("[DEBUG LOG]: Não foi possivel mostrar\n");
+            system("cls");
+        }
+        else if (opt == '5')
+        {
+            printf("Salvar alteracoes?\n");
+            printf("-> ");
+            fflush(stdin);
+            scanf(" %s", &opt);
+            if (opt == 's')
+            {
+                if (saveTasks(workbook))
+                    exit(0);
+                else
+                    exit(1);
+            }
             else
-                exit(1);
-
-            break;
-
-        default:
-            exit(1);
-            break;
+                exit(0);
+        }
+        else
+        {
+            printf("[DEBUG LOG]: Essa opção n existe\n");
         }
     }
 }
@@ -160,11 +157,10 @@ void eventLoop(WorkBook *workbook)
 int main()
 {
     WorkBook workbook;
-    if (!setup(&workbook))
-    {
-        printf("Erro ao configurar o WorkBook.\n");
-        return 1;
-    }
+    workbook.head = NULL;
+    workbook.filePointer = NULL;
+
+    setup(&workbook);
     eventLoop(&workbook);
     return 0;
 }
