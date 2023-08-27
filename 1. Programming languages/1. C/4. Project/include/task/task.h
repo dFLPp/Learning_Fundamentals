@@ -32,5 +32,6 @@ Task createTaskFromFile(char *id, char *title, char *desc, Boolean isDone);
 Boolean setTitle(Task *task, char *title);
 Boolean setDesc(Task *task, char *desc);
 Boolean setStatus(Task *task, Boolean status);
+void printTask(Task *task);
 
 #endif

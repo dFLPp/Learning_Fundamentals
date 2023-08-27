@@ -12,7 +12,7 @@
 #include "../workbook/workbook.h"
 #include "consts.h"
 
-void loadTasks();
-void eventLoop();
+Boolean setup(WorkBook *workbook);
+void eventLoop(WorkBook *workbook);
 
 #endif

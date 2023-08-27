@@ -51,3 +51,11 @@ Boolean setStatus(Task *task, Boolean status)
     task->isDone = status;
     return TRUE;
 }
+
+void printTask(Task *task)
+{
+    printf("id: %s\n", task->id);
+    printf("titulo: %s\n", task->title);
+    printf("descricao: %s\n", task->desc);
+    printf("Concluida: %s\n", task->isDone);
+}
