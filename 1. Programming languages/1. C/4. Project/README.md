@@ -28,3 +28,11 @@ Neste projeto, você criará um programa em C que permite ao usuário gerenciar 
 - Função para gerar ids para cada struct
 
 - [Descartado] Usar uma stacks para salvar o estado da linked list e implementar a funcionalidade undo e redo (fique a vontade para tentar fazer, n é dificil, mas só salvar o head da lista na stack n é o sufuciente)
+
+## Comando usado para executar:
+
+Mova/abra o terminal no diretório do main.c e execute o comando:
+
+`gcc ./main.c ../id/id.c ../task/task.c ../tasklist/tasklist.c ../workbook/workbook.c -o a`
+
+Após isso é só executar "a.exe" que apareceu no msm diretório de main.c
