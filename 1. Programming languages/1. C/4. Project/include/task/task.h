@@ -6,21 +6,25 @@
 #include <string.h>
 
 #include "id.h"
+#include "consts.h"
 
-typedef enum
+typedef enum Boolean Boolean;
+
+enum Boolean
 {
-    False = 0, // 0
-    True = 1   // 1
-} Boolean;
+    FALSE = 0,
+    TRUE = 1
+};
 
-typedef struct
+typedef struct Task Task;
+
+struct Task
 {
-    char id[17];
-    char title[33];
-    char desc[257];
-    Boolean isDone; // status
-
-} Task;
+    char id[ID_LENGTH];
+    char title[TITLE_LENGTH];
+    char desc[DESC_LENGTH];
+    Boolean isDone;
+};
 
 Task createTask(char *title, char *desc, Boolean isDone);
 Task createTaskFromFile(char *id, char *title, char *desc, Boolean isDone);

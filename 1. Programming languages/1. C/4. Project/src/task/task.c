@@ -1,72 +1,53 @@
 #include "task.h"
 
-Task createTask(char *title, char *desc, Boolean isDone)
+static void copyStringWithLimit(char *destination, const char *source, size_t limit)
+{
+    strncpy(destination, source, limit - 1);
+    destination[limit - 1] = '\0';
+}
+
+static Task createTaskCommon(char *title, char *desc, Boolean isDone)
 {
     Task task;
+    task.isDone = (isDone >= FALSE && isDone <= TRUE) ? isDone : FALSE;
 
-    if (isDone != True && isDone != False)
-        return task;
-    else
-    {
+    copyStringWithLimit(task.title, title, sizeof(task.title));
+    copyStringWithLimit(task.desc, desc, sizeof(task.desc));
 
-        task.isDone = isDone;
+    return task;
+}
 
-        strncpy(task.title, title, sizeof(task.title) - 1);
-        task.title[sizeof(task.title) - 1] = '\0'; // surprise motherfucker
-
-        strncpy(task.desc, desc, sizeof(task.desc) - 1);
-        task.desc[sizeof(task.desc) - 1] = '\0'; // surprise motherfucker
-
-        generateUUID(task.id);
-        task.id[sizeof(task.id) - 1] = '\0';
-
-        return task;
-    }
+Task createTask(char *title, char *desc, Boolean isDone)
+{
+    Task task = createTaskCommon(title, desc, isDone);
+    generateUUID(task.id);
+    copyStringWithLimit(task.id, task.id, sizeof(task.id)); // só pra garantir q n extrapola o tamanho
+    return task;
 }
 
 Task createTaskFromFile(char *id, char *title, char *desc, Boolean isDone)
 {
-    Task task;
-
-    if (isDone != True && isDone != False)
-        return task;
-    else
-    {
-
-        task.isDone = isDone;
-
-        strncpy(task.title, title, sizeof(task.title) - 1);
-        task.title[sizeof(task.title) - 1] = '\0'; // surprise motherfucker
-
-        strncpy(task.desc, desc, sizeof(task.desc) - 1);
-        task.desc[sizeof(task.desc) - 1] = '\0'; // surprise motherfucker
-
-        strncpy(task.id, id, sizeof(task.id) - 1);
-        task.id[sizeof(task.id) - 1] = '\0'; // surprise motherfucker
-
-        return task;
-    }
+    Task task = createTaskCommon(title, desc, isDone);
+    copyStringWithLimit(task.id, id, sizeof(task.id));
+    return task;
 }
 
 Boolean setTitle(Task *task, char *title)
 {
-    strncpy(task->title, title, sizeof(task->title) - 1);
-    task->title[sizeof(task->title) - 1] = '\0'; // surprise motherfucker
-    return True;
+    copyStringWithLimit(task->title, title, sizeof(task->title));
+    return TRUE;
 }
+
 Boolean setDesc(Task *task, char *desc)
 {
-    strncpy(task->desc, desc, sizeof(task->desc) - 1);
-    task->desc[sizeof(task->desc) - 1] = '\0'; // surprise motherfucker
-    return True;
+    copyStringWithLimit(task->desc, desc, sizeof(task->desc));
+    return TRUE;
 }
+
 Boolean setStatus(Task *task, Boolean status)
 {
     if (task->isDone == status)
-        return False;
-    else
-    {
-        task->isDone = status;
-        return True;
-    }
+        return FALSE;
+    task->isDone = status;
+    return TRUE;
 }

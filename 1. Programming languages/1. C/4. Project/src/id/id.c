@@ -19,5 +19,5 @@ void generateUUID(char *uuidStr)
     unsigned long long combinedValue = timestamp ^ clockValue ^ counter++;
 
     // Formatar o valor combinado como UUID
-    snprintf(uuidStr, 33, "%017llx", combinedValue);
+    snprintf(uuidStr, 33, "%016llx", combinedValue);
 }

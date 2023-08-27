@@ -3,9 +3,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "tasklist.h"
 
-typedef struct
+#include "task.h"
+#include "tasklist.h"
+#include "consts.h"
+
+typedef struct WorkBook WorkBook;
+
+struct WorkBook
 {
     Node *head;
     FILE *filePointer;
