@@ -37,4 +37,9 @@ Após isso é só executar "program.exe" que apareceu no root do programa.
 
 ## Limitações
 
-1. O texto escrito em title e desc tem que ser ASCII, ou seja, nada de acentos ou emojis ou etc.
+1. O texto escrito em title e desc tem que ser ASCII, ou seja, nada de acentos, emojis ou etc.
+
+## Problemas
+
+- Segmentation fault ao tentar salvar no arquivo
+- se a task é feita dentro do programa title e desc n aceitam espaços (mas se carrega do arquivo funciona just fine)

@@ -17,6 +17,6 @@ struct Node
 
 Boolean insertNode(Node **head, Task *task);
 Boolean removeNode(Node **head, char *id);
-Boolean updateNode(Node **head, char *id, Boolean status);
+Boolean updateNode(Node **head, char *id);
 
 #endif

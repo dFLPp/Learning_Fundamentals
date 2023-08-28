@@ -55,7 +55,7 @@ Boolean removeNode(Node **head, char *id)
     return FALSE;
 }
 
-Boolean updateNode(Node **head, char *id, Boolean status)
+Boolean updateNode(Node **head, char *id)
 {
     Node *curr = *head;
 
@@ -63,7 +63,12 @@ Boolean updateNode(Node **head, char *id, Boolean status)
     {
         if (strcmp(curr->object.id, id) == 0)
         {
-            curr->object.isDone = status;
+            printf("Achou a task correta:\n");
+            printf(curr->object.title);
+            if (curr->object.isDone == TRUE)
+                curr->object.isDone = FALSE;
+            else
+                curr->object.isDone = TRUE;
             return TRUE;
         }
 

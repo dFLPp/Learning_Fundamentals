@@ -34,13 +34,12 @@ static Boolean deleteItem(Node **head, char *id)
     return removeNode(head, id);
 }
 
-static Boolean modifyItem(Node **head, char *id, Boolean newStatus)
+static Boolean modifyItem(Node **head, char *id)
 {
     if (head == NULL || *head == NULL)
-        if (newStatus < FALSE || newStatus > TRUE)
-            return FALSE;
+        return FALSE;
 
-    return updateNode(head, id, newStatus);
+    return updateNode(head, id);
 }
 
 static Boolean showTasks(WorkBook *workbook)
@@ -78,7 +77,6 @@ void eventLoop(WorkBook *workbook)
 {
     char opt;
     char newId[ID_LENGTH];
-    Boolean newIsDone;
 
     while (TRUE)
     {
@@ -96,11 +94,15 @@ void eventLoop(WorkBook *workbook)
 
         if (opt == '1')
         {
+            system("cls");
             if (createItem(&workbook->head) == FALSE)
             {
                 system("cls");
-                printf("[DEBUG LOG]: Não foi possivel inserir\n");
+                printf("[DEBUG LOG]: Nao foi possivel inserir\n\n");
             }
+            else
+                system("cls");
+            printf("[DEBUG LOG]: Insercao ocorreu com sucesso\n\n");
         }
 
         else if (opt == '2')
@@ -108,35 +110,41 @@ void eventLoop(WorkBook *workbook)
             printf("ID: ");
             fflush(stdin);
             scanf("%s", newId);
+
+            system("cls");
             if (deleteItem(&workbook->head, newId) == FALSE)
             {
                 system("cls");
-                printf("[DEBUG LOG]: Não foi possivel deletar\n");
+                printf("[DEBUG LOG]: Nao foi possivel remover\n\n");
             }
+            else
+                system("cls");
+            printf("[DEBUG LOG]: Remocao ocorreu com sucesso\n\n");
         }
 
         else if (opt == '3')
         {
-            printf("id da task: ");
+            printf("ID: ");
             fflush(stdin);
             scanf("%s", newId);
 
-            printf("novo status: ");
-            fflush(stdin);
-            scanf("%d", newIsDone);
-
-            if (modifyItem(&workbook->head, newId, newIsDone) == FALSE)
+            system("cls");
+            if (modifyItem(&workbook->head, newId) == FALSE)
             {
                 system("cls");
-                printf("[DEBUG LOG]: Nao foi possivel modificar\n");
+                printf("[DEBUG LOG]: Nao foi possivel modificar\n\n");
             }
+            else
+                system("cls");
+            printf("[DEBUG LOG]: Modificacao ocorreu com sucesso\n\n");
         }
         else if (opt == '4')
         {
+            system("cls");
             if (showTasks(workbook) == FALSE)
             {
                 system("cls");
-                printf("[DEBUG LOG]: Nao foi possivel mostrar\n");
+                printf("[DEBUG LOG]: Nao foi possivel mostrar\n\n");
             }
         }
         else if (opt == '5')
@@ -157,7 +165,7 @@ void eventLoop(WorkBook *workbook)
         }
         else
         {
-            printf("[DEBUG LOG]: Essa opção n existe\n");
+            printf("[DEBUG LOG]: Opcao nao existe\n\n");
         }
     }
 }
