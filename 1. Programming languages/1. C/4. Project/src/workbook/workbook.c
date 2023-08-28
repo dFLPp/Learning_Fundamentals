@@ -11,7 +11,7 @@ static bool mapFromFileToList(Node **head, FILE *filePointer)
     int charCount = 0;
 
     // coloque o path para o arquivo no seu PC
-    filePointer = fopen("C:\\Users\\Outros\\Downloads\\Arch\\C\\1. Fundamentals\\1. Programming languages\\1. C\\4. Project\\data.txt", "r");
+    filePointer = fopen("path para o arquivo no seu computador");
 
     if (filePointer == NULL)
         return FALSE;
@@ -52,17 +52,16 @@ static bool mapFromFileToList(Node **head, FILE *filePointer)
     return (*head != NULL); // Retornar TRUE se a lista não estiver vazia
 }
 
-// refazer
 static bool mapFromListToFile(Node **head, FILE *filePointer)
 {
     if (head == NULL)
         return FALSE;
 
     Node *curr = *head;
-    int gambiarra;
+    int gambiarra = 0;
     char line[ID_LENGTH + DESC_LENGTH + TITLE_LENGTH + 20];
 
-    filePointer = fopen("C:\\Users\\Outros\\Downloads\\Arch\\C\\1. Fundamentals\\1. Programming languages\\1. C\\4. Project\\data.txt", "w");
+    filePointer = fopen("path para o arquivo no seu computador");
 
     if (filePointer == NULL)
         return FALSE;
@@ -72,7 +71,7 @@ static bool mapFromListToFile(Node **head, FILE *filePointer)
     while (curr != NULL)
     {
         gambiarra = (int)curr->object.isDone;
-        snprintf(line, sizeof(line), "%s;-;%s;-;%s;-;%d\0", curr->object.id, curr->object.title, gambiarra);
+        snprintf(line, sizeof(line), "%s;%s;%s;%d\0", curr->object.id, curr->object.title, curr->object.desc, gambiarra);
         fprintf(filePointer, "%s\n", line);
         curr = curr->next;
     }
@@ -106,9 +105,10 @@ bool saveTasks(WorkBook *workbook)
         return FALSE;
     else
     {
-        char resp[1];
+        char resp[2];
         printf("SAVE TASKS: ");
         getInput(resp, "SAVE_ON_EXIT");
+        getchar();
         if (strcmp(resp, "s") == 0)
             return mapFromListToFile(&workbook->head, workbook->filePointer);
         else
@@ -118,9 +118,10 @@ bool saveTasks(WorkBook *workbook)
 
 bool loadTasks(WorkBook *workbook)
 {
-    char resp[1];
+    char resp[2];
     printf("LOAD TASKS: ");
     getInput(resp, "LOAD_ON_START");
+    getchar();
     if (strcmp(resp, "s") == 0)
         return mapFromFileToList(&workbook->head, workbook->filePointer);
     else

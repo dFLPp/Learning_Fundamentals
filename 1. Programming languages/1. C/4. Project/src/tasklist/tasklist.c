@@ -63,8 +63,6 @@ static bool updateNode(Node **head, char *id)
     {
         if (strcmp(curr->object.id, id) == 0)
         {
-            printf("Achou a task correta:\n");
-            printf(curr->object.title);
             if (curr->object.isDone == TRUE)
                 curr->object.isDone = FALSE;
             else
@@ -80,7 +78,9 @@ static bool updateNode(Node **head, char *id)
 bool deleteItem(Node **head)
 {
     char id[ID_LENGTH];
+    printf("ID: ");
     getInput(id, "ID");
+    getchar();
 
     if (head == NULL)
         return FALSE;
@@ -99,9 +99,14 @@ bool createItem(Node **head)
 
     printf("VALUES:\n");
 
+    printf("- TITLE: ");
     getInput(title, "TITLE");
+
+    printf("- DESCRIPTION: ");
     getInput(desc, "DESCRIPTION");
-    getInput(isDone, "STATUS");
+
+    printf("- STATUS: ");
+    scanf(" %c", &isDone);
 
     if (strcmp(isDone, "1") == 0)
         status = TRUE;
@@ -120,7 +125,9 @@ bool createItemFromFile(Node **head, Task *task)
 bool modifyItem(Node **head)
 {
     char id[ID_LENGTH];
+    printf("ID: ");
     getInput(id, "ID");
+    getchar();
 
     if (head == NULL || *head == NULL)
         return FALSE;

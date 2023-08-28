@@ -9,18 +9,19 @@ bool getInput(char *destination, char *type)
         size = ID_LENGTH;
     else if (strcmp(type, "TITLE") == 0)
         size = TITLE_LENGTH;
-    else if (strcmp(type, "STATUS") == 0)
-        size = STATUS_LENGTH;
     else if (strcmp(type, "DESCRIPTION") == 0)
         size = DESC_LENGTH;
     else if (strcmp(type, "SAVE_ON_EXIT") == 0)
         size = OPT_LENGTH;
     else if (strcmp(type, "LOAD_ON_START") == 0)
         size = OPT_LENGTH;
-    else if (strcmp(type, "MENU_OPTION") == 0)
-        size = OPT_LENGTH;
     else
+    {
+        printf("[DEGUB LOG]: ERROR\n");
         return FALSE;
+    }
+
+    fflush(stdin);
 
     if (fgets(destination, size, stdin) == NULL)
     {
