@@ -69,7 +69,7 @@ Depois disso você deve abir o terminal, ir/andar até o diretório onde `main.c
 gcc ./main.c ../lib/input.c ../id/id.c ../task/task.c ../tasklist/tasklist.c ../workbook/workbook.c -o ../../program.exe
 ```
 
-Após isso é só executar "program.exe" que apareceu no root do programa (depois do `-o` é onde vc coloca o path de para onde seu programa vai ser gerado)
+Após isso é só executar "program.exe" que apareceu no path que vc deu (depois do `-o` é onde vc coloca o path de para onde seu programa vai ser gerado)
 
 ## Limitações/Problemas
 
