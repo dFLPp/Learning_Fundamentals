@@ -15,7 +15,7 @@ static Node *createNode(Task *task)
     return NULL;
 }
 
-Boolean insertNode(Node **head, Task *task)
+static bool insertNode(Node **head, Task *task)
 {
     Node *newNode = createNode(task);
     if (newNode != NULL)
@@ -27,7 +27,7 @@ Boolean insertNode(Node **head, Task *task)
     return FALSE;
 }
 
-Boolean removeNode(Node **head, char *id)
+static bool removeNode(Node **head, char *id)
 {
     Node *curr = *head;
     Node *prev = NULL;
@@ -55,7 +55,7 @@ Boolean removeNode(Node **head, char *id)
     return FALSE;
 }
 
-Boolean updateNode(Node **head, char *id)
+static bool updateNode(Node **head, char *id)
 {
     Node *curr = *head;
 
@@ -75,4 +75,55 @@ Boolean updateNode(Node **head, char *id)
         curr = curr->next;
     }
     return FALSE;
+}
+
+bool deleteItem(Node **head)
+{
+    char id[ID_LENGTH];
+    getInput(id, "ID");
+
+    if (head == NULL)
+        return FALSE;
+    if (id == NULL)
+        return FALSE;
+
+    return removeNode(head, id);
+}
+
+bool createItem(Node **head)
+{
+    char title[TITLE_LENGTH];
+    char desc[DESC_LENGTH];
+    char isDone[STATUS_LENGTH];
+    bool status = FALSE;
+
+    printf("VALUES:\n");
+
+    getInput(title, "TITLE");
+    getInput(desc, "DESCRIPTION");
+    getInput(isDone, "STATUS");
+
+    if (strcmp(isDone, "1") == 0)
+        status = TRUE;
+    else
+        status = FALSE;
+
+    Task task = createTask(title, desc, status);
+    return insertNode(head, &task);
+}
+
+bool createItemFromFile(Node **head, Task *task)
+{
+    return insertNode(head, task);
+}
+
+bool modifyItem(Node **head)
+{
+    char id[ID_LENGTH];
+    getInput(id, "ID");
+
+    if (head == NULL || *head == NULL)
+        return FALSE;
+
+    return updateNode(head, id);
 }

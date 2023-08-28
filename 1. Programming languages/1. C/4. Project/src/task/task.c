@@ -6,29 +6,29 @@ static void copyStringWithLimit(char *destination, const char *source, size_t li
     destination[limit - 1] = '\0';
 }
 
-static Task createTaskCommon(char *title, char *desc, Boolean isDone)
+static Task createTaskCommon(char *title, char *desc, bool isDone)
 {
     Task task;
     task.isDone = (isDone >= FALSE && isDone <= TRUE) ? isDone : FALSE;
 
-    copyStringWithLimit(task.title, title, sizeof(task.title));
-    copyStringWithLimit(task.desc, desc, sizeof(task.desc));
+    copyStringWithLimit(task.title, title, TITLE_LENGTH);
+    copyStringWithLimit(task.desc, desc, DESC_LENGTH);
 
     return task;
 }
 
-Task createTask(char *title, char *desc, Boolean isDone)
+Task createTask(char *title, char *desc, bool isDone)
 {
     Task task = createTaskCommon(title, desc, isDone);
     generateUUID(task.id);
-    copyStringWithLimit(task.id, task.id, sizeof(task.id)); // só pra garantir q n extrapola o tamanho
+    copyStringWithLimit(task.id, task.id, ID_LENGTH);
     return task;
 }
 
-Task createTaskFromFile(char *id, char *title, char *desc, Boolean isDone)
+Task createTaskFromFile(char *id, char *title, char *desc, bool isDone)
 {
     Task task = createTaskCommon(title, desc, isDone);
-    copyStringWithLimit(task.id, id, sizeof(task.id));
+    copyStringWithLimit(task.id, id, ID_LENGTH);
     return task;
 }
 

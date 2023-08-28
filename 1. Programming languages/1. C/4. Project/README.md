@@ -31,7 +31,7 @@ Neste projeto, você criará um programa em C que permite ao usuário gerenciar 
 
 Mova/abra o terminal no diretório do main.c e execute o comando:
 
-`gcc ./main.c ../id/id.c ../task/task.c ../tasklist/tasklist.c ../workbook/workbook.c -o ../../program.exe`
+`gcc ./main.c ../lib/input.c ../id/id.c ../task/task.c ../tasklist/tasklist.c ../workbook/workbook.c -o ../../program.exe`
 
 Após isso é só executar "program.exe" que apareceu no root do programa.
 

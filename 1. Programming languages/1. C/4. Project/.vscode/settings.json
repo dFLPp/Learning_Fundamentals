@@ -7,7 +7,14 @@
         "task.h": "c",
         "consts.h": "c",
         "tasklist.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "array": "c",
+        "compare": "c",
+        "functional": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "input.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "cmake.configureOnOpen": true

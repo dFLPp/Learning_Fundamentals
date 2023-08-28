@@ -1,64 +1,46 @@
 #include "../../include/workbook/workbook.h"
 
-/*
-Problemas:
-- Não consigue ler apos o programa iniciar (mapFromFileToList falho)
-- Não consegue salvar nem em memória nem em arquivo inputs com espaço
-- Não consegue salvar todos os campos corretamente
-*/
-
-Boolean mapFromFileToList(Node **head, FILE *filePointer)
+static bool mapFromFileToList(Node **head, FILE *filePointer)
 {
     char id[ID_LENGTH];
     char title[TITLE_LENGTH];
     char desc[DESC_LENGTH];
-    Boolean isDone;
+    bool isDone;
 
-    char ch;           // Variável para ler caracteres do arquivo
-    int charCount = 0; // Contador de caracteres
+    char ch;
+    int charCount = 0;
 
+    // coloque o path para o arquivo no seu PC
     filePointer = fopen("C:\\Users\\Outros\\Downloads\\Arch\\C\\1. Fundamentals\\1. Programming languages\\1. C\\4. Project\\data.txt", "r");
 
-    // Verificar se o ponteiro para o arquivo é válido
     if (filePointer == NULL)
         return FALSE;
 
-    // Voltar ao início do arquivo para começar a leitura
     rewind(filePointer);
 
     while ((ch = fgetc(filePointer)) != EOF)
     {
         if (ch == ';')
         {
-            // Terminou de ler um campo, colocar o caractere nulo para finalizar a string
+
             id[charCount] = '\0';
 
-            // Reiniciar o contador de caracteres para o próximo campo
             charCount = 0;
-
-            // Ler o próximo campo (título)
             while ((ch = fgetc(filePointer)) != ';')
-            {
                 title[charCount++] = ch;
-            }
+
             title[charCount] = '\0';
 
-            // Reiniciar o contador de caracteres para o próximo campo
             charCount = 0;
-
-            // Ler o próximo campo (descrição)
             while ((ch = fgetc(filePointer)) != ';')
-            {
                 desc[charCount++] = ch;
-            }
+
             desc[charCount] = '\0';
 
-            // Ler o campo final (isDone)
             fscanf(filePointer, "%d\n", &isDone);
 
-            // Criar a Task e inserir no nó
             Task task = createTaskFromFile(id, title, desc, isDone);
-            insertNode(head, &task);
+            createItemFromFile(head, &task);
         }
         else
         {
@@ -69,7 +51,9 @@ Boolean mapFromFileToList(Node **head, FILE *filePointer)
 
     return (*head != NULL); // Retornar TRUE se a lista não estiver vazia
 }
-Boolean mapFromListToFile(Node **head, FILE *filePointer)
+
+// refazer
+static bool mapFromListToFile(Node **head, FILE *filePointer)
 {
     if (head == NULL)
         return FALSE;
@@ -77,7 +61,6 @@ Boolean mapFromListToFile(Node **head, FILE *filePointer)
     Node *curr = *head;
     int gambiarra;
     char line[ID_LENGTH + DESC_LENGTH + TITLE_LENGTH + 20];
-    // 3 caractares separadores para 3 separações + 1 carac para o número de isDone + 1 do '\0' = 11;
 
     filePointer = fopen("C:\\Users\\Outros\\Downloads\\Arch\\C\\1. Fundamentals\\1. Programming languages\\1. C\\4. Project\\data.txt", "w");
 
@@ -97,4 +80,49 @@ Boolean mapFromListToFile(Node **head, FILE *filePointer)
     fclose(filePointer);
 
     return TRUE;
+}
+
+bool showTasks(WorkBook *workbook)
+{
+    if (workbook->head == NULL)
+        return FALSE;
+
+    Node *curr = workbook->head;
+    int i = 1;
+    while (curr != NULL)
+    {
+        printf("TASK %d\n", i);
+        printTask(&curr->object);
+        printf("\n");
+        curr = curr->next;
+        i++;
+    }
+    return TRUE;
+}
+
+bool saveTasks(WorkBook *workbook)
+{
+    if (workbook->head == NULL)
+        return FALSE;
+    else
+    {
+        char resp[1];
+        printf("SAVE TASKS: ");
+        getInput(resp, "SAVE_ON_EXIT");
+        if (strcmp(resp, "s") == 0)
+            return mapFromListToFile(&workbook->head, workbook->filePointer);
+        else
+            return FALSE;
+    }
+}
+
+bool loadTasks(WorkBook *workbook)
+{
+    char resp[1];
+    printf("LOAD TASKS: ");
+    getInput(resp, "LOAD_ON_START");
+    if (strcmp(resp, "s") == 0)
+        return mapFromFileToList(&workbook->head, workbook->filePointer);
+    else
+        return FALSE;
 }

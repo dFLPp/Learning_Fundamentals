@@ -6,6 +6,9 @@
 #include <string.h>
 
 #include "../task/task.h"
+#include "../lib/types.h"
+#include "../lib/consts.h"
+#include "../lib/input.h"
 
 typedef struct Node Node;
 
@@ -15,8 +18,9 @@ struct Node
     Node *next;
 };
 
-Boolean insertNode(Node **head, Task *task);
-Boolean removeNode(Node **head, char *id);
-Boolean updateNode(Node **head, char *id);
+bool createItemFromFile(Node **head, Task *task);
+bool createItem(Node **head);
+bool deleteItem(Node **head);
+bool modifyItem(Node **head);
 
 #endif
