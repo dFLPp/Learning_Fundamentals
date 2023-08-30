@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-// truque para conseguir limpar o terminal
+// truque para conseguir limpar o terminal em "qualquer" sistema
 #ifdef _WIN32
 #include <windows.h>
 #define CLEAR_SCREEN "cls"
