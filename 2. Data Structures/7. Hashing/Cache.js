@@ -1,4 +1,4 @@
-//usando hash tables para armazenar dados em cache
+//usando maps para armazenar dados em cache
 
 class Cache {
   constructor(maxSize) {

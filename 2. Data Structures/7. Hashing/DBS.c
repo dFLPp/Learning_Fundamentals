@@ -1,3 +1,5 @@
+// Fazendo uma "database" com hash tables
+
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
