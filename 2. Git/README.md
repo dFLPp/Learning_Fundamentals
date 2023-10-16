@@ -220,7 +220,7 @@ Por padrão, depois que vc faz o primeiro commit uma branch é criada automatica
 
 Imagine que vc tem um site e nele está escrito o seu email. Você, como pessoa famosa, n pode deixar email exposto e então decide tira-lo do site. Ao invés de alterar o arquivo principal (na branch principal) você pode criar uma nova branch (que vai se basear no ultimo commit feito) e então dentro dela alterar o arquivo. Dessa forma você terá duas versões do site: uma com o seu email e outra sem. Quando vc estiver pronto basta fazer a fusão/união das branches, de modo que as alterações da branch que você criou seram transportadas para a branch principal. Talvez n tenha ficado claro, mas usando branches além de vc ter mais segurança ao fazer modificações tem mais controle sobre quando e como a mudança vai ocorrer.
 
-![a](./images/gitBranch.png)
+![a](./static/gitBranch.png)
 
 Considere que cada bolinha acima é commit e que cada ramificação é uma branch. Repare que os commits são interligados porque um das informações que ele carrega é qual é o seu parente.
 
@@ -275,7 +275,7 @@ Merge ou fusão é processo de juntar/unir duas branches. Basicamente você quer
 O fast foward merge é forma mais fácil de fazer o merge de uma branch. Nesse modo, para consolidar o merge basta que um novo commit seja feito na branch principal, tendo como parente os 2 commits (os mais recentes em cada branch). Contudo existe um pré-requisito: Você não pode fazer nenhum novo commit na branch original (master ou main).
 Ou seja, se você criou uma branch nova chamada de "arroz" e dentro da branch arroz você fez 5 commits novos e não fez nenhum commit novo na branch original, então você pode fazer o Fast foward merge.
 
-![a](./images/FastFowordMerge.png)
+![a](./static/FastFowordMerge.png)
 
 Para fazer esse merge:
 
@@ -285,7 +285,7 @@ Para fazer esse merge:
 
 Na 3 way merge, o tempo não para. No momento que você cria a branch nova (cópia da principal) uma nova mudança ocorre (um novo commit) na principal. Essa mudança não é propagada/percebida pela outra branch (são dois universos/linhas separadas). O modo de fazer o merge é o msm que o descrito acima (msm comando e etc), além de que o um novo commit que tem como parentes os 2 commits mais recentes em cada branch também vai ser criado. A diferença é que você terá lidar com os _conflicts_.
 
-![a](./images/3WayMerge.png)
+![a](./static/3WayMerge.png)
 
 Conflicts são ambiguidades que podem vir a ocorrer. Por exemplo: na branch "master" está escrito que é 2023 mas na branch "arroz" está escrito que 2024. Qual delas é a correta? É você quem vai decidir. Como dito, conflicts podem ocorrer, não é garantia que vam. Quando eles ocorrem um mensagem de erro será emitida pelo git e então você terá que escolher qual das versões e a correta. O git vai abrir automaticamente o editor de texto que você escolheu como principal durante a instalação e vai pedir para vc escolher. Dai então, basta você apagar (tipo, apagar o texto que tá escrito) que você não quer e deixar o que você quer.
 
@@ -358,7 +358,7 @@ Alguns conceitos que vale a pena você conhecer, mas que definitivamente não pr
 
 Rebasing é uma alternativa mais "radical" ao git merge. Basicamente você fazer a "fusão" dos commits da outra branch, na master branch, dessa forma os commits não vão ter dois parents.É uma forma de deixar o histórico de commits mais linear, colocando todos os commits de uma branch "na frente" dos commits do branch principal. É considerado uma atvidade/operação destrutiva e que só é util em situações muito específicas.
 
-![a](./images/rebase.svg)
+![a](./static/rebase.svg)
 
 Dado duas branches "A" e "main" (que é a sua principal) que possuem alguns commits. Para fazer o rebase você entra na branch A com `git switch "A"` e então executa o comando `git rebase main`, onde _main_ vai ser commit de referencia (base) - Chamei _main_ de commit pq main é um texto para o commit mais recente, definição de branch.
 Depois disso basta voltar a para a branch principal com `git switch main` e então executar `git merge`.

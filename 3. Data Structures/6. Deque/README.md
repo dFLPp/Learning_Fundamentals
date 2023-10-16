@@ -1,9 +1,5 @@
 # Deques
 
-## Introdução
-
-Na área de estruturas de dados, a eficiência e flexibilidade no armazenamento e manipulação de elementos são fundamentais. Os deques, ou "Double-Ended Queues" (filas de duas pontas), são uma estrutura que oferece uma combinação única de características que permitem inserção e remoção eficientes tanto no início quanto no final da estrutura. Neste artigo, exploraremos os conceitos, operações, aplicações e complexidade temporal dos deques, destacando suas vantagens em relação a outras estruturas de dados lineares.
-
 ## Conceito e Funcionamento
 
 Um deque é uma estrutura de dados linear semelhante a uma fila (queue) ou pilha (stack), mas que permite a inserção e remoção de elementos tanto no início quanto no final da estrutura. Isso proporciona maior flexibilidade em situações onde a ordem de processamento é importante. De forma geral, um deque suporta as seguintes operações:

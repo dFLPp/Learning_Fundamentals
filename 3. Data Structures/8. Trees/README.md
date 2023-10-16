@@ -1,16 +1,10 @@
 # Trees
 
-## Introdução
-
-As estruturas de dados formam a base da ciência da computação, permitindo a organização, manipulação e acesso eficiente a informações. Entre as várias estruturas, as árvores destacam-se como um conceito essencial e poderoso. Árvores são estruturas hierárquicas que se assemelham à organização das árvores na natureza. Neste artigo, embarcaremos em uma jornada de descoberta sobre a teoria por trás das árvores, sua evolução histórica, aplicações em diversas áreas e os diferentes tipos de árvores, incluindo suas distinções e aplicações específicas.
-
----
 
 ## Raízes Históricas e Evolução
 
 O conceito de árvores remonta à década de 1800, quando matemáticos como Arthur Cayley começaram a explorar as estruturas de árvores para resolver problemas em teoria dos grafos. No início do século XX, árvores foram utilizadas para otimizar algoritmos e organizar estruturas de dados. Durante a década de 1950, as árvores binárias de busca (BST) foram introduzidas para facilitar operações de busca eficiente. Com o tempo, a teoria das árvores evoluiu para incluir árvores balanceadas, árvores de heap, árvores B e muitos outros tipos.
 
----
 
 ## Teoria das Árvores
 
@@ -26,7 +20,6 @@ Uma árvore é um conjunto de elementos chamados "nós", conectados por arestas 
 - **Nível**: Conjunto de nós à mesma profundidade.
 - **Subárvore**: Conjunto de nós e arestas descendentes de um nó.
 
----
 
 ## Diversas Aplicações das Árvores
 
@@ -38,7 +31,6 @@ As árvores têm um impacto profundo em várias áreas da ciência da computaç�
 4. **Inteligência Artificial**: Árvores de decisão são empregadas em algoritmos de aprendizado de máquina para classificação e regressão.
 5. **Grafos e Algoritmos de Busca**: Estruturas de árvores representam grafos e facilitam algoritmos como Prim e Kruskal para encontrar árvores geradoras mínimas.
 
----
 
 ## Explorando os Diferentes Tipos de Árvores
 
@@ -50,7 +42,6 @@ As árvores têm um impacto profundo em várias áreas da ciência da computaç�
 6. **Árvores Trie**: Projetadas para armazenar e buscar strings rapidamente.
 7. **Árvores de Segmento**: Usadas para consultas rápidas em intervalos em matemática computacional.
 
----
 
 ## Iterando em Árvores
 
@@ -111,7 +102,3 @@ Heaps têm diversas aplicações:
 4. **Agendamento de Processos**: Em sistemas operacionais, heaps podem ser usadas para agendar processos de acordo com a prioridade.
 
 5. **Algoritmos de Compressão**: Heaps são usadas em algoritmos de compressão como o algoritmo de Huffman.
-
-## Conclusão
-
-As árvores representam uma das estruturas de dados mais ricas e versáteis na ciência da computação. Desde suas raízes históricas até suas modernas aplicações em uma variedade de campos, as árvores continuam a moldar a maneira como lidamos com informações e resolvemos problemas. Ao compreender a teoria por trás das árvo

@@ -13,6 +13,7 @@ class SLL {
     this.nNodes = 0;
   }
 
+  //método privado
   #createNode(data) {
     return new Node(data);
   }

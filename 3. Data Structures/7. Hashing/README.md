@@ -1,9 +1,5 @@
 # Hash tables
 
-## Introdução
-
-Em ciência da computação, a busca eficiente e o armazenamento otimizado de dados são objetivos essenciais para a criação de algoritmos e estruturas de dados robustas. As tabelas de hash, também conhecidas como "hash tables" ou "tabelas hash", são uma das ferramentas mais versáteis e eficazes para atingir esses objetivos. Neste artigo, mergulharemos nas profundezas (cringe) das tabelas de hash, explorando seus conceitos, operações, colisões, resoluções e aplicações.
-
 ## Conceito e Funcionamento
 
 Uma tabela de hash é uma estrutura de dados que utiliza uma função de hash para mapear chaves (ou chaves de busca) para valores. A função de hash transforma a chave em um índice da tabela, onde o valor associado à chave é armazenado ou recuperado. A principal característica das tabelas de hash é a busca e recuperação de dados em tempo quase constante, tornando-as ideais para problemas em que a velocidade é crucial.
