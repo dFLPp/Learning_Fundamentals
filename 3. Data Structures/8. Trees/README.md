@@ -75,20 +75,6 @@ Uma alternativa para evitar o estouro de pilha é usar uma pilha para simular a 
 
 Uma heap é um tipo de arvore tão utilizada que alguns consideram ela como uma estrutura de dados aparte. Ela se baseia na propriedade de ordenação parcial, onde cada nó pai tem um valor menor (ou maior) que seus nós filhos. Heaps são frequentemente usadas para implementar filas de prioridade, onde o elemento de maior (ou menor) prioridade pode ser acessado rapidamente.
 
-### Heap Binária
-
-A heap binária é uma das formas mais comuns de heap. Ela é uma árvore binária completa, o que significa que todos os níveis da árvore estão preenchidos, exceto talvez o último nível, que é preenchido da esquerda para a direita. Em uma heap binária, o valor do nó pai é sempre menor (ou maior) do que o valor dos nós filhos.
-
-A operação de inserção em uma heap binária começa adicionando o novo elemento no próximo espaço disponível no último nível e, em seguida, realizando um processo chamado "heapify", que envolve trocas entre nós para restaurar a propriedade da heap.
-
-### Heap de Fibonacci
-
-A heap de Fibonacci é uma variação que oferece melhor desempenho em operações de inserção e união, mas pode ser menos eficiente em outras operações. Ela usa uma estrutura de árvore de Fibonacci, que permite que os elementos sejam inseridos e removidos com complexidade amortizada muito baixa.
-
-### Heap de Binomial
-
-A heap de binomial é outra variação que utiliza árvores de binômios. Cada árvore de binômio segue a propriedade da heap, e a estrutura da heap de binomial é formada por várias árvores de binômios interconectadas. Essa variação é útil para operações como inserção e união, mas também pode ser aplicada a outros algoritmos.
-
 ### Aplicações de Heaps
 
 Heaps têm diversas aplicações:
@@ -102,3 +88,27 @@ Heaps têm diversas aplicações:
 4. **Agendamento de Processos**: Em sistemas operacionais, heaps podem ser usadas para agendar processos de acordo com a prioridade.
 
 5. **Algoritmos de Compressão**: Heaps são usadas em algoritmos de compressão como o algoritmo de Huffman.
+
+### Heap binária
+
+Existem diferentes tipos de heaps, contudo para nós, simples mortais, as heaps mais comuns/utilizadas são a **min-heap** e/ou a **max-heap**, que são heaps binárias.
+
+1. Min-Heap: Em uma min-heap, para cada nó, o valor desse nó deve ser menor ou igual ao valor de seus filhos, ou seja, os roots sempre são menores (em valor) que seus filhos. Recomendo ver uma imagem.
+
+2. Max-Heap: Em uma max-heap é o contrário: para cada nó, o valor desse nó deve ser maior ou igual ao valor de seus filhos, ou seja, os roots sempre são maiores (em valor) que seus filhos.
+
+### Min-heap implementation
+
+A título de exemplo vamos implementar uma min-heap. O jeito mais comum de fazer isso é usando uma array de tamanho fixo ou variável. 
+
+Para adicionar elementos você simplemente pusha o elemento para o final da array, contudo isso quebra a propriedade da min-heap. Assim, depois de adicionar um elemento é necessário fazer a operação *Heapify Up*, que consiste em comparar o elemento recém adicionado com seu parente, trocando eles de posição (na array) se necessário - isso se repete até que a min-heap esteja de volta ao normal.
+
+A operação de remoção em uma min-heap, consiste em remover o menor elemento da array (se fosse uma max-heap removeria o maior). Contudo de acordo com as propriedades da min-heap, o root de uma subtree sempre vai ser o menor elemento, logo sendo removido. Após remover um root é necessário realizar a operação *Heapify Down*, que consiste em colocar o ultimo elemento da array em seu lugar (lugar/posição do root na array) e então começar a comparar esse elemento recém adicionado com seus novos filhos, trocando de lugar se necessário
+
+### De tree para array
+
+A ideia de trasformar/mapear uma tree em uma array não é algo exclusivo/único de heap trees, mas sim uma técnica usada em várias ocasiões. Você pode mapear uma tree para uma array usando algum algorítimo de travessia (pre, in ou pos-order), o que é chamado de **Depth-First Traversal**. Ou você pode usar **Breadth-First Traversal**, conhecido também como level-order, onde você itera por cada nivel da tree.
+
+![Exemplo de level-order traversal, se a imagem n pegar, google it](https://www.interviewbit.com/blog/wp-content/uploads/2021/10/Image-1-2.jpg)
+
+Long-story-short, min-heaps usam justamente level-order traveral para mapear uma array para tree e vice-versa. Para saber como implementar, ou google ou cheque minha implementação no tópico Algorithms (depois de data structures). 

@@ -1,4 +1,5 @@
 // binary tree
+// Uma árvore que só pode ter no máximo 2 filhos para cada nó
 
 #include <stdio.h>
 #include <stdlib.h>
