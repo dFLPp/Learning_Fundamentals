@@ -1,10 +1,10 @@
-## Strings: Conceito, Variações, Implementações e Usos
+# Strings: Conceito, Variações, Implementações e Usos
 
-### Conceito
+## Conceito
 
 Uma **string** é uma sequência de caracteres, como letras, números e símbolos, utilizada para representar texto em linguagens de programação. Elas são usadas para armazenar e manipular informações de texto e são um dos tipos de dados fundamentais em muitas linguagens de programação.
 
-### Variações
+## Variações
 
 Existem duas principais variações de strings:
 
@@ -12,7 +12,7 @@ Existem duas principais variações de strings:
 
 2. **Strings de Bytes:** Essas strings são compostas por bytes individuais, frequentemente utilizadas para armazenar dados binários, como arquivos de imagens ou executáveis.
 
-### Implementações
+## Implementações
 
 As strings podem ser implementadas de várias maneiras nas linguagens de programação:
 
@@ -21,7 +21,7 @@ As strings podem ser implementadas de várias maneiras nas linguagens de program
 
 - **Strings Literais:** Strings podem ser definidas de forma literal, incluindo o texto entre aspas simples (`'`) ou duplas (`"`), dependendo da linguagem.
 
-### Usos
+## Usos
 
 As strings têm uma ampla gama de usos em programação:
 
